@@ -3,8 +3,7 @@ class Player implements Entity{
     _position = new PVector(x, y);
   }
   
-  void update(){
-  }
+  void update(){}
   
   void draw(){
     ellipse(0,0,40,20);
