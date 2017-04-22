@@ -1,4 +1,5 @@
-class Player implements Entity{
+class Player implements Entity, Fish{
+
   Player(float x, float y){
     _position = new PVector(x, y);
   }
@@ -17,9 +18,15 @@ class Player implements Entity{
 
   float x(){return 0;}
   float y(){return 0;}
+
+  PVector direction(){return _direction;}
   
   EntityType type(){return EntityType.Player;}
-  void callCollidingEvent(EntityType type){}
+
+  void callCollidingEvent(EntityType type){
+
+  }
 
   private PVector _position;
+  private PVector _direction;
 }
