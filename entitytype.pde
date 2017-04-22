@@ -1,4 +1,6 @@
 enum EntityType{
   Player,
-  Enemy
+  Enemy,
+  Minion,
+  Egg
 }
