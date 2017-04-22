@@ -1,10 +1,15 @@
 class Player implements Entity{
-  
-  void update(){
-    
+  Player(float x, float y){
+    _position = new PVector(x, y);
   }
   
-  void draw(){}
+  void update(){
+  }
+  
+  void draw(){
+    ellipse(0,0,40,20);
+  }
+
   boolean shouldDie(){return false;}
   void die(){}
 
@@ -16,4 +21,6 @@ class Player implements Entity{
   
   EntityType type(){return EntityType.Player;}
   void callCollidingEvent(EntityType type){}
+
+  private PVector _position;
 }
