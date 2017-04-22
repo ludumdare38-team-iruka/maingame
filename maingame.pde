@@ -7,16 +7,25 @@ enum GameState{
 }
 
 class Game{
-  void setup(){}
+  void setup(){
+    _collisionDetector = new CollisionDetector();
+  }
+
   void update(){}
+
   void draw(){}
+
+  private CollisionDetector _collisionDetector;
+  private List<Entity> _entities = new ArrayList<Entity>();
 }
 
+Resources resources = new Resources();
 Game game = new Game();
 
 void setup(){
   //720p
   size(1280, 720);
+  resources.minim = new Minim(this);
   game.setup();
 }
 
