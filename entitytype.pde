@@ -1,0 +1,4 @@
+enum EntityType{
+  Player,
+  Enemy
+}
