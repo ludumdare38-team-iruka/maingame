@@ -11,9 +11,16 @@ class Game{
     _collisionDetector = new CollisionDetector();
     _player = new Player(200, 200);
     _entities.add(_player);
+    _fishes.add(_player);
   }
 
-  void update(){}
+  void update(){
+    for(Entity entity : _entities){
+      entity.update();
+    }
+
+    updateEntities();
+  }
 
   void draw(){
     for(Entity entity : _entities){
@@ -26,7 +33,12 @@ class Game{
 
   private CollisionDetector _collisionDetector;
   private List<Entity> _entities = new ArrayList<Entity>();
+  private List<Fish> _fishes     = new ArrayList<Fish>();
   private Player _player;
+
+  private void updateEntities(){
+    _collisionDetector.update(_entities);
+  }
 }
 
 Resources resources = new Resources();
