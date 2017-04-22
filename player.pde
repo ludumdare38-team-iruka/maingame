@@ -16,16 +16,14 @@ class Player implements Entity, Fish{
   int width(){return 0;}
   int height(){return 0;}
 
-  float x(){return 0;}
-  float y(){return 0;}
+  float x(){return _position.x;}
+  float y(){return _position.y;}
 
   PVector direction(){return _direction;}
   
   EntityType type(){return EntityType.Player;}
 
-  void callCollidingEvent(EntityType type){
-
-  }
+  void callCollidingEvent(EntityType type){}
 
   private PVector _position;
   private PVector _direction;
