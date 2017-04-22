@@ -1,4 +1,4 @@
-class Sakana_teki implements Entity{
+class Enemy implements Entity{
   
   void update(){
     
