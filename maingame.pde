@@ -6,7 +6,7 @@ enum GameState{
   GameClear
 }
 
-class Game{
+class Game extends Scene{
   void setup(){
     _collisionDetector = new CollisionDetector();
     _player = new Player(200, 200);
@@ -46,16 +46,18 @@ class Game{
 }
 
 Resources resources = new Resources();
-Game game = new Game();
+Scene currentScene;
 
 void setup(){
   //720p
   size(1280, 720);
   resources.minim = new Minim(this);
+  Game game = new Game();
   game.setup();
+  currentScene = game;
 }
 
 void draw(){
-  game.update();
-  game.draw();
+  currentScene.update();
+  currentScene.draw();
 }
