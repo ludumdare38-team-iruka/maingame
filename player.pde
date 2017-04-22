@@ -1,4 +1,5 @@
 class Player implements Entity, Fish{
+
   Player(float x, float y){
     _position = new PVector(x, y);
   }
