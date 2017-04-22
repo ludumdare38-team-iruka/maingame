@@ -16,7 +16,8 @@ class Player implements Entity, Fish{
     pushMatrix();
     translate(_position.x,_position.y);
     rotate(angle);
-    ellipse(0,0,40,20);
+    scale(0.5);
+    resources.draw("player.png");
     popMatrix();
   }
 
