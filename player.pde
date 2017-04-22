@@ -2,12 +2,22 @@ class Player implements Entity, Fish{
 
   Player(float x, float y){
     _position = new PVector(x, y);
+    _direction = new PVector(0, 0);
   }
   
   void update(){}
   
   void draw(){
+    
+    float angle;
+    
+    angle = atan2(_direction.x,_direction.y);
+    
+    pushMatrix();
+    translate(_position.x,_position.y);
+    rotate(angle);
     ellipse(0,0,40,20);
+    popMatrix();
   }
 
   boolean shouldDie(){return false;}
