@@ -9,14 +9,24 @@ enum GameState{
 class Game{
   void setup(){
     _collisionDetector = new CollisionDetector();
+    _player = new Player(200, 200);
+    _entities.add(_player);
   }
 
   void update(){}
 
-  void draw(){}
+  void draw(){
+    for(Entity entity : _entities){
+      pushMatrix();
+      translate(entity.x(), entity.y());
+      entity.draw();
+      popMatrix();
+    }
+  }
 
   private CollisionDetector _collisionDetector;
   private List<Entity> _entities = new ArrayList<Entity>();
+  private Player _player;
 }
 
 Resources resources = new Resources();
