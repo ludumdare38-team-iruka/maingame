@@ -15,7 +15,8 @@ class Game{
 Game game = new Game();
 
 void setup(){
-  size(800, 800);
+  //720p
+  size(1280, 720);
   game.setup();
 }
 
