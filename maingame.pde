@@ -12,6 +12,10 @@ class Game{
     _player = new Player(200, 200);
     _entities.add(_player);
     _fishes.add(_player);
+
+    Minion minion = new Minion(200, 200);
+    _entities.add(minion);
+    _fishes.add(minion);
   }
 
   void update(){

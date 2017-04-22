@@ -1,8 +1,16 @@
-class Minion implements Entity{
+class Minion implements Entity, Fish{
+  Minion(float x, float y){
+    _position = new PVector(x, y);
+  }
   
   void update(){}
   
-  void draw(){}
+  void draw(){
+    pushMatrix();
+    scale(0.5);
+    resources.draw("minion.png");
+    popMatrix();
+  }
   boolean shouldDie(){return false;}
   void die(){}
 
