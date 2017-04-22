@@ -1,4 +1,4 @@
-class Player implements Entity(){
+class Player implements Entity{
   
   void update(){
     
