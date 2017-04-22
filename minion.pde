@@ -1,4 +1,4 @@
-class Minions implements Entity{
+class Minion implements Entity{
   
   void update(){}
   
@@ -12,6 +12,6 @@ class Minions implements Entity{
   float x(){return 0;}
   float y(){return 0;}
   
-  EntityType type(){return EntityType.Minions;}
+  EntityType type(){return EntityType.Minion;}
   void callCollidingEvent(EntityType type){}
 }
