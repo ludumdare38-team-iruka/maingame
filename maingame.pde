@@ -6,6 +6,7 @@ enum GameState{
   GameClear
 }
 
+import java.util.ListIterator;
 class Game extends Scene{
   Game(){
     _collisionDetector = new CollisionDetector();
@@ -22,13 +23,9 @@ class Game extends Scene{
     Enemy enemy = new Enemy(0,0);
     _entities.add(enemy);
     
-    Egg egg = new Egg(0,0);
-    _entities.add(egg);
-
     for(int i = 0; i < 50; i++){
-      Minion m = new Minion(20+i, 20*i);
-      _entities.add(m);
-      _fishes.add(m);
+      Egg egg = new Egg(640+i*10,640, 5*60*30-i*5*60*30/50);
+      _entities.add(egg);
     }
   }
 
@@ -40,7 +37,21 @@ class Game extends Scene{
       entity.update();
     }
 
+    spawnEggs();
     updateEntities();
+  }
+
+  void spawnEggs(){
+    ListIterator<Entity> itr = _entities.listIterator();
+    while(itr.hasNext()){
+      Entity entity = itr.next();
+      if(entity.type() == EntityType.Egg && entity.age() > 5*60*30){
+        Minion m = new Minion(entity.position().x, entity.position().y);
+        itr.set(m);
+        _fishes.add(m);
+        // itr.remove();
+      }
+    }
   }
 
   void draw(){
