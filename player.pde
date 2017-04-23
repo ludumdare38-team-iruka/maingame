@@ -11,14 +11,14 @@ class Player implements Entity, Fish{
     _target = new PVector(mouseX, mouseY);
     PVector diff = PVector.sub(_target, _position);
     float move = min(diff.magSq(), maxSpeed);
-    diff = diff.normalize().mult(move);
+    diff.normalize().mult(move);
     _position.add(diff);
-    _direction = diff.normalize();
+    _direction = diff;
   }
   
   void draw(){
     float angle;
-    if(_direction.magSq() <= maxSpeed){
+    if(_direction.magSq() <= 1){
       angle = 0;
     }else{
       angle = _direction.heading();
