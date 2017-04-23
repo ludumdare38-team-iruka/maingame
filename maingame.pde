@@ -25,7 +25,7 @@ class Game extends Scene{
     Egg egg = new Egg(0,0);
     _entities.add(egg);
 
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 50; i++){
       Minion m = new Minion(20+i, 20*i);
       _entities.add(m);
       _fishes.add(m);
@@ -33,7 +33,8 @@ class Game extends Scene{
   }
 
   void update(){
-    _boidsManager.update(_fishes);
+    _player.position(new PVector(mouseX, mouseY));
+    _boidsManager.update(_player.position(), _fishes);
 
     for(Entity entity : _entities){
       entity.update();

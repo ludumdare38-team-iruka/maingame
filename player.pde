@@ -15,9 +15,8 @@ class Player implements Entity, Fish{
     angle = atan2(_direction.x,_direction.y);
     
     pushMatrix();
-    translate(_position.x,_position.y);
     rotate(angle);
-    scale(0.5);
+    scale(0.2);
     resources.draw("player.png");
     popMatrix();
   }
@@ -31,6 +30,7 @@ class Player implements Entity, Fish{
   float x(){return _position.x;}
   float y(){return _position.y;}
   PVector position(){return _position;};
+  void position(PVector p){_position = p;};
   PVector velocity(){return _velocity;};
 
   PVector direction(){return _direction;}
@@ -41,6 +41,8 @@ class Player implements Entity, Fish{
 
   void fishes(List<Fish> arr){
   }
+
+  void target(PVector p){}
 
   void calcVelocity(){}
 
