@@ -9,6 +9,7 @@ class Opening extends Scene{
     return(new Tutorial());
   }
   void mousePressed(){
+    resources.close("title.mp3");
     _isFinish = true;
   }
 }
