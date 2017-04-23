@@ -21,12 +21,6 @@ class Game extends Scene{
     _entities.add(minion);
     _fishes.add(minion);
     
-    Enemy enemy = new Enemy(0,0);
-    _entities.add(enemy);
-
-    // Crown crown = new Crown();
-    // _entities.add(crown);
-    
     for(int i = 0; i < 50; i++){
       Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
       _entities.add(egg);
@@ -35,8 +29,10 @@ class Game extends Scene{
   }
 
   void update(){
-    //_player.target(new PVector(mouseX, mouseY));
-    println(_counter);
+    if(int(_counter+1)%1000 == 0){
+      spawnMaguro();
+    }
+
     if(int(_counter)%2000 == 0){
       spawnCrown();
     }
@@ -55,6 +51,9 @@ class Game extends Scene{
 
     _boidsManager.update(_player.position(), _fishes);
 
+    float fishDensity = fishDensity();
+    println(fishDensity);
+    updateEnemies(fishDensity);
 
     for(Entity entity : _entities){
       entity.update();
@@ -96,14 +95,27 @@ class Game extends Scene{
   private BoidsManager _boidsManager;
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
+  private List<Enemy> _enemies = new ArrayList<Enemy>();
   private Player _player;
   private boolean isGameClear = false;
   private boolean _mousePressing = false;
   private float _counter = 0;
 
+  private void spawnMaguro(){
+    Maguro maguro = new Maguro(random(0, screenSize.x), 0, 640, 640);
+    _entities.add(maguro);
+    _enemies.add(maguro);
+  }
+
   private void spawnCrown(){
     Crown crown = new Crown();
     _entities.add(crown);
+  }
+
+  private void updateEnemies(float fishDensity){
+    for(Enemy enemy: _enemies){
+      enemy.fishDensity(fishDensity);
+    }
   }
 
   private void updateEntities(){
@@ -153,7 +165,7 @@ class Game extends Scene{
       sum = PVector.dot(diff, diff);
       count++;
     }
-    return sum/float(_fishes.size());
+    return 1.0/sum*float(_fishes.size())*1000;
   }
 
   private PVector fishAvgPosition(){
