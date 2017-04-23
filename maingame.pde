@@ -34,6 +34,7 @@ class Game extends Scene{
   }
 
   void update(){
+    //_player.target(new PVector(mouseX, mouseY));
     println(_counter);
     if(int(_counter)%2000 == 0){
       spawnCrown();
@@ -51,7 +52,6 @@ class Game extends Scene{
       }
     }
 
-    _player.position(new PVector(mouseX, mouseY));
     _boidsManager.update(_player.position(), _fishes);
 
 
