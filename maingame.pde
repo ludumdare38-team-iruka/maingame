@@ -30,7 +30,7 @@ class Game extends Scene{
   }
 
   void update(){
-    _player.position(new PVector(mouseX, mouseY));
+    //_player.target(new PVector(mouseX, mouseY));
     _boidsManager.update(_player.position(), _fishes);
 
     for(Entity entity : _entities){

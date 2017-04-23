@@ -13,7 +13,17 @@ class Minion implements Entity, Fish{
   }
   
   void draw(){
+    float angle;
+    if(_velocity.magSq() <= maxSpeed){
+      angle = 0;
+    }else{
+      angle = _velocity.heading();
+    }
     pushMatrix();
+    rotate(angle);
+    if(abs(degrees(angle)) >=90){
+      scale(1, -1);
+    }
     scale(0.2);
     resources.draw("minion.png");
     popMatrix();
@@ -56,7 +66,7 @@ class Minion implements Entity, Fish{
 
     PVector vTarget = new PVector();
     if(PVector.dist( _target, this._position) > 30){
-      vTarget = PVector.sub(_target, this._position).normalize().mult(r4);
+      vTarget = PVector.sub(_target, this._position).normalize().mult(maxSpeed);
     }
 
     _velocity = PVector.add(_v1, _v2, _v3).add(vTarget);
@@ -72,6 +82,7 @@ class Minion implements Entity, Fish{
   private PVector _v2 = new PVector();
   private PVector _v3 = new PVector();
   private PVector _target;
+  private int maxSpeed = 0;
 
   private PVector calcCenter(){
     float centerPullFactor = 300;
