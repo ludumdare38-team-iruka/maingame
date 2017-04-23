@@ -9,6 +9,8 @@ enum GameState{
 class Game extends Scene{
   Game(){
     _collisionDetector = new CollisionDetector();
+    _boidsManager = new BoidsManager();
+
     _player = new Player(200, 200);
     _entities.add(_player);
     _fishes.add(_player);
@@ -51,6 +53,7 @@ class Game extends Scene{
     return(new Gameover());
   }
   private CollisionDetector _collisionDetector;
+  private BoidsManager _boidsManager;
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
   private Player _player;
