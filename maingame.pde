@@ -34,7 +34,12 @@ class Game extends Scene{
       popMatrix();
     }
   }
-
+  void mousePressed(){
+    _isFinish = true;
+  }
+  Scene nextScene(){
+    return(new Gameover());
+  }
   private CollisionDetector _collisionDetector;
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
@@ -60,4 +65,23 @@ void setup(){
 void draw(){
   currentScene.update();
   currentScene.draw();
+  if(currentScene.isFinish()){
+    currentScene = currentScene.nextScene();
+    if(currentScene instanceof NullScene){
+      exit();
+      return;
+    }
+  }
+}
+void keyPressed(){
+  currentScene.keyPressed();
+}
+void keyReleased(){
+  currentScene.keyReleased();
+}
+void mousePressed(){
+  currentScene.mousePressed();
+}
+void mouseReleased(){
+  currentScene.mouseReleased();
 }
