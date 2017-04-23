@@ -1,5 +1,10 @@
 class Tutorial extends Scene{
   void update(){}
   void draw(){}
-  boolean isFinish(){return true;}
+  Scene nextScene(){
+    return(new Game());
+  }
+  void mousePressed(){
+    _isFinish = true;
+  }
 }

@@ -3,7 +3,7 @@ abstract class Scene{
   void update(){}
   void draw(){}
   boolean isFinish(){return _isFinish;}
-  Scene nextScene(){return null;}
+  Scene nextScene(){return(new NullScene());}
   void keyPressed(){}
   void keyReleased(){}
   void mousePressed(){}
