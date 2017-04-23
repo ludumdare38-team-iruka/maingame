@@ -36,15 +36,19 @@ class Game extends Scene{
   }
   void mousePressed(){
     _isFinish = true;
+    if(mouseButton == LEFT){
+      isGameClear = true;
+    }
   }
   Scene nextScene(){
+    if(isGameClear)return(new Gameclear());
     return(new Gameover());
   }
   private CollisionDetector _collisionDetector;
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
   private Player _player;
-
+  private boolean isGameClear = false;
   private void updateEntities(){
     _collisionDetector.update(_entities);
   }
@@ -57,7 +61,7 @@ void setup(){
   //720p
   size(1280, 720);
   resources.minim = new Minim(this);
-  currentScene = new Game();
+  currentScene = new Opening();
 }
 
 void draw(){

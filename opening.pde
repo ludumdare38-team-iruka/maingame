@@ -1,5 +1,10 @@
 class Opening extends Scene{
   void update(){}
   void draw(){}
-  boolean isFinish(){return true;}
+  Scene nextScene(){
+    return(new Tutorial());
+  }
+  void mousePressed(){
+    _isFinish = true;
+  }
 }
