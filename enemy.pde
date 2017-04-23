@@ -1,15 +1,42 @@
 class Enemy implements Entity{  
-  Enemy(float x, float y){
+  Enemy(float x, float y,float tx, float ty){
+    _position = new PVector(x,y);
+    _target = new PVector(tx,ty);
   }
+  
+
   
   void update(){
     
+    int speed = 2;
+    float angle; 
+    float ex,ey;
+    
+    angle = atan2(_target.y - _position.y, _target.x - _position.x);
+   
+    ex = speed*cos(angle);
+    ey = speed*sin(angle);
+    
+    _position.x += ex;
+    _position.y += ey;
+    
+    _direction.x = ex;
+    _direction.y = ey;
   }
   
   void draw(){
     
+    float angle;
+    
+    angle = atan2(_direction.y, _direction.x);
+    
     pushMatrix();
-    scale(0.4);
+    rotate(angle);
+    if(angle >= PI/2){
+      scale(-0.5,0.5);
+    }else{
+      scale(0.5);
+    }
     resources.draw("maguro.png");
     popMatrix();
   
@@ -22,12 +49,16 @@ class Enemy implements Entity{
   int width(){return 0;}
   int height(){return 0;}
 
-  float x(){return 650;}
-  float y(){return 300;}
+  float x(){return _position.x;}
+  float y(){return _position.y;}
   PVector position(){return _position;};
+  PVector direction(){return _direction;};
+
   
   EntityType type(){return EntityType.Enemy;}
   void callCollidingEvent(EntityType type){}
 
   private PVector _position = new PVector();
+  private PVector _direction = new PVector();
+  private PVector _target = new PVector();
 }
