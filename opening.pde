@@ -4,7 +4,9 @@ class Opening extends Scene{
   }
   void update(){
   }
-  void draw(){}
+  void draw(){
+    resources.draw("title.png",0,0);
+  }
   Scene nextScene(){
     return(new Tutorial());
   }
