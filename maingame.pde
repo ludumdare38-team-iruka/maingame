@@ -16,6 +16,12 @@ class Game extends Scene{
     Minion minion = new Minion(200, 200);
     _entities.add(minion);
     _fishes.add(minion);
+    
+    Enemy enemy = new Enemy(0,0);
+    _entities.add(enemy);
+    
+    Egg egg = new Egg(0,0);
+    _entities.add(egg);
   }
 
   void update(){
