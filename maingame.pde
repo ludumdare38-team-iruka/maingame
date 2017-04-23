@@ -9,7 +9,9 @@ enum GameState{
 class Game extends Scene{
   Game(){
     _collisionDetector = new CollisionDetector();
-    _player = new Player(200, 200);
+    _boidsManager = new BoidsManager();
+
+    _player = new Player(500, 200);
     _entities.add(_player);
     _fishes.add(_player);
 
@@ -22,9 +24,17 @@ class Game extends Scene{
     
     Egg egg = new Egg(0,0);
     _entities.add(egg);
+
+    for(int i = 0; i < 10; i++){
+      Minion m = new Minion(20+i, 20*i);
+      _entities.add(m);
+      _fishes.add(m);
+    }
   }
 
   void update(){
+    _boidsManager.update(_fishes);
+
     for(Entity entity : _entities){
       entity.update();
     }
@@ -51,6 +61,7 @@ class Game extends Scene{
     return(new Gameover());
   }
   private CollisionDetector _collisionDetector;
+  private BoidsManager _boidsManager;
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
   private Player _player;
@@ -71,6 +82,7 @@ void setup(){
 }
 
 void draw(){
+  background(128);
   currentScene.update();
   currentScene.draw();
   if(currentScene.isFinish()){

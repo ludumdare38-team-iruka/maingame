@@ -3,6 +3,7 @@ class Player implements Entity, Fish{
   Player(float x, float y){
     _position = new PVector(x, y);
     _direction = new PVector(0, 0);
+    _velocity = new PVector(0, 0);
   }
   
   void update(){}
@@ -29,6 +30,8 @@ class Player implements Entity, Fish{
 
   float x(){return _position.x;}
   float y(){return _position.y;}
+  PVector position(){return _position;};
+  PVector velocity(){return _velocity;};
 
   PVector direction(){return _direction;}
   
@@ -36,6 +39,12 @@ class Player implements Entity, Fish{
 
   void callCollidingEvent(EntityType type){}
 
+  void fishes(List<Fish> arr){
+  }
+
+  void calcVelocity(){}
+
   private PVector _position;
   private PVector _direction;
+  private PVector _velocity;
 }

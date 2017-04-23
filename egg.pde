@@ -20,7 +20,10 @@ class Egg implements Entity{
 
   float x(){return 640;}
   float y(){return 640;}
+  PVector position(){return _position;};
   
   EntityType type(){return EntityType.Egg;}
   void callCollidingEvent(EntityType type){}
+
+  private PVector _position = new PVector();
 }

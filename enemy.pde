@@ -22,9 +22,11 @@ class Enemy implements Entity{
 
   float x(){return 650;}
   float y(){return 300;}
+  PVector position(){return _position;};
   
   EntityType type(){return EntityType.Enemy;}
   void callCollidingEvent(EntityType type){}
 
+  private PVector _position = new PVector();
 }
   
