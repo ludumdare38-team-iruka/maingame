@@ -1,15 +1,33 @@
 class Minion implements Entity, Fish{
   Minion(float x, float y){
-    _position = new PVector(x, y);
-    _velocity = new PVector(0, 0);
+    _position     = new PVector(x, y);
+    _velocity     = new PVector(0, 0);
+    _acceleration = new PVector(0, 0);
 
     _v1 = new PVector();
     _v2 = new PVector();
     _v3 = new PVector();
+
+    _radius = 0.0;
+    _velocityLimit = 2;
+    _forceLimit = 0.03;
   }
   
   void update(){
-    _position = PVector.add(_position, _velocity);
+    _velocity.add(_acceleration);
+    _velocity.limit(_velocityLimit);
+    _position.add(_velocity);
+
+    if(screenSize.x < _position.x){
+      _position.x -= screenSize.x;
+    }else if(_position.x < 0){
+      _position.x += screenSize.x;
+    }
+    if(screenSize.y < _position.y){
+      _position.y -= screenSize.y;
+    }else if(_position.y < 0){
+      _position.y += screenSize.y;
+    }
   }
   
   void draw(){
@@ -46,58 +64,75 @@ class Minion implements Entity, Fish{
   }
 
   void calcVelocity(){
-    float r1 = 1.5;
-    float r2 = 0.5;
-    float r3 = 0.5;
+    float r1 = 1.0;
+    float r2 = 1.5;
+    float r3 = 1.0;
     float r4 = 0.0;
-    _v1 = PVector.mult(calcCenter(),r1);
-    _v2 = PVector.mult(calcAvoid(),r2);
-    _v3 = PVector.mult(calcAverage(),r3);
+    PVector a1 = PVector.mult(calcCenter() ,r1);
+    PVector a2 = PVector.mult(calcAvoid()  ,r2);
+    PVector a3 = PVector.mult(calcAverage(),r3);
 
-    PVector vTarget = new PVector();
-    if(PVector.dist( _target, this._position) > 30){
-      vTarget = PVector.sub(_target, this._position).normalize().mult(r4);
-    }
+    // PVector aTarget = new PVector();
+    // if(PVector.dist( _target, this._position) > 30){
+    //   aTarget = PVector.sub(_target, this._position).normalize().mult(r4);
+    // }
 
-    _velocity = PVector.add(_v1, _v2, _v3).add(vTarget);
+    _acceleration = PVector.add(a1, a2, a3);
+
   }
 
   private PVector _position;
   private PVector _direction;
+  private float _radius;
 
   private PVector _velocity;
+  private PVector _acceleration;
   private List<Fish> _fishes;
 
   private PVector _v1 = new PVector();
   private PVector _v2 = new PVector();
   private PVector _v3 = new PVector();
   private PVector _target;
+  private float _velocityLimit;
+  private float _forceLimit;
 
   private PVector calcCenter(){
-    float centerPullFactor = 300;
-    PVector v = new PVector(0, 0);
-    for(Fish fish : _fishes){
+    float neighbordist = 50;
+    PVector sum = new PVector(0, 0);
+    int count = 0;
+    for (Fish fish: _fishes) {
       if(this.equals(fish))continue;
-      v.add(fish.position());
+      float d = PVector.dist(this._position, fish.position());
+      if ((d > 0) && (d < neighbordist)) {
+        sum.add(PVector.sub(fish.position(), this._position));
+        count++;
+      }
     }
-    v.div(_fishes.size()- 1);
-    v.sub(this._position).div(centerPullFactor);
-    return v;
+    if (count > 0) {
+      sum.div(float(count));
+      return seek(sum);
+    } 
+    else {
+      return new PVector(0, 0);
+    }
   }
 
   private PVector calcAvoid(){
-    float distThreshold = 60;
+    float distThreshold = 25;
     PVector v = new PVector(0, 0);
+    int count = 0;
     for(Fish fish : _fishes){
       if(this.equals(fish))continue;
       float dist = PVector.dist(this._position, fish.position());
-      if(dist < distThreshold){
+      if(dist > 0 && dist < distThreshold){
         PVector direct = PVector.sub(fish.position(), this._position);
         PVector directNormal = new PVector();
         directNormal.set(direct).normalize();
-        v.sub(PVector.mult(directNormal, -dist+distThreshold));
+        v.sub(PVector.div(directNormal, dist));
+        count++;
       }
     }
+    if(count > 0)v.div(float(count));
     return v;
 
   };
@@ -112,4 +147,20 @@ class Minion implements Entity, Fish{
     v.sub(this._velocity).mult(0.5);
     return v;
   };
+
+  private PVector seek(PVector target) {
+    PVector desired = PVector.sub(_target, _position);  // A vector pointing from the position to the target
+    // Scale to maximum speed
+    desired.normalize();
+    desired.mult(_velocityLimit);
+
+    // Above two lines of code below could be condensed with new PVector setMag() method
+    // Not using this method until Processing.js catches up
+    // desired.setMag(maxspeed);
+
+    // Steering = Desired minus Velocity
+    PVector steer = PVector.sub(desired, _velocity);
+    steer.limit(_forceLimit);  // Limit to maximum steering force
+    return steer;
+  }
 }

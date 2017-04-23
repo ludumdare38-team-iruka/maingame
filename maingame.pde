@@ -99,7 +99,10 @@ class Game extends Scene{
 Resources resources = new Resources();
 Scene currentScene;
 
+PVector screenSize;
+
 void setup(){
+  screenSize = new PVector(1280, 720);
   //720p
   size(1280, 720);
   resources.minim = new Minim(this);
