@@ -39,6 +39,20 @@ class Game extends Scene{
 
     spawnEggs();
     updateEntities();
+    checkFinished();
+  }
+
+  private void checkFinished(){
+    int eatenEggs = 0; //TODO
+    int eggs = 0;
+    for(Entity entity : _entities){
+      if(entity.type() == EntityType.Egg)eggs++;
+    }
+
+    if(eggs == 0){
+      _isFinish = true;
+      isGameClear = true;//TODO
+    }
   }
 
   void spawnEggs(){
@@ -63,12 +77,10 @@ class Game extends Scene{
       popMatrix();
     }
   }
+
   void mousePressed(){
-    _isFinish = true;
-    if(mouseButton == LEFT){
-      isGameClear = true;
-    }
   }
+
   Scene nextScene(){
     if(isGameClear)return(new Gameclear());
     return(new Gameover());
