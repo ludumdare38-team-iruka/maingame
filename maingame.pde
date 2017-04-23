@@ -22,6 +22,9 @@ class Game extends Scene{
     
     Enemy enemy = new Enemy(0,0);
     _entities.add(enemy);
+
+    // Crown crown = new Crown();
+    // _entities.add(crown);
     
     for(int i = 0; i < 50; i++){
       Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
@@ -30,13 +33,26 @@ class Game extends Scene{
   }
 
   void update(){
+    println(_counter);
+    if(int(_counter)%2000 == 0){
+      spawnCrown();
+    }
+
+    if(_mousePressing && _player.charisma > 0){
+      _player.charisma-=1.0f;
+      float attraction = 4.0;
+      for(Fish fish: _fishes){
+        fish.attraction(attraction);
+      }
+    }else{
+      for(Fish fish: _fishes){
+        fish.attraction(0.0);
+      }
+    }
+
     _player.position(new PVector(mouseX, mouseY));
     _boidsManager.update(_player.position(), _fishes);
 
-    float attraction = 4.0;
-    for(Fish fish: _fishes){
-      fish.attraction(attraction);
-    }
 
     for(Entity entity : _entities){
       entity.update();
@@ -45,13 +61,13 @@ class Game extends Scene{
     spawnEggs();
     updateEntities();
     checkFinished();
+
+    _counter++;
   }
 
 
 
   void draw(){
-    println("fishDensity", 1.0f/fishDensity()*1000f);
-
     resources.draw("background.png", 0, 0);
     for(Entity entity : _entities){
       pushMatrix();
@@ -62,6 +78,11 @@ class Game extends Scene{
   }
 
   void mousePressed(){
+    _mousePressing = true;
+  }
+
+  void mouseReleased(){
+    _mousePressing = false;
   }
 
   Scene nextScene(){
@@ -75,8 +96,22 @@ class Game extends Scene{
   private List<Fish> _fishes     = new ArrayList<Fish>();
   private Player _player;
   private boolean isGameClear = false;
+  private boolean _mousePressing = false;
+  private float _counter = 0;
+
+  private void spawnCrown(){
+    Crown crown = new Crown();
+    _entities.add(crown);
+  }
+
   private void updateEntities(){
     _collisionDetector.update(_entities);
+
+    ListIterator<Entity> itr = _entities.listIterator();
+    while(itr.hasNext()){
+      Entity entity = itr.next();
+      if(entity.shouldDie())itr.remove();
+    }
   }
 
   private void spawnEggs(){

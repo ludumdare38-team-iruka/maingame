@@ -103,7 +103,7 @@ class Minion implements Entity, Fish{
   private float _attraction = 0;
 
   private PVector calcCenter(){
-    float neighbordist = 50*_attraction;
+    float neighbordist = 70*_attraction;
     PVector sum = new PVector(0, 0);
     int count = 0;
     for (Fish fish: _fishes) {
