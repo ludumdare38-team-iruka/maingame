@@ -14,6 +14,10 @@ class Player implements Entity, Fish{
     diff.normalize().mult(move);
     _position.add(diff);
     _direction = diff;
+    if(charisma>0){
+      charisma-=1.0;
+      charisma = max(charisma, 0);
+    }
   }
   
   void draw(){
@@ -31,6 +35,17 @@ class Player implements Entity, Fish{
     scale(0.2);
     resources.draw("player.png");
     popMatrix();
+    if(charisma > 0){
+      drawCrown();
+    }
+  }
+
+  private void drawCrown(){
+    pushMatrix();
+    translate(8, -17);
+    scale(0.1);
+    resources.draw("crown.png");
+    popMatrix();
   }
 
   boolean shouldDie(){return false;}
@@ -38,8 +53,8 @@ class Player implements Entity, Fish{
   float life(){return 0;}
   float age(){return 0;}
 
-  int width(){return 0;}
-  int height(){return 0;}
+  int width(){return 10;}
+  int height(){return 10;}
 
   float x(){return _position.x;}
   float y(){return _position.y;}
@@ -50,10 +65,16 @@ class Player implements Entity, Fish{
   PVector velocity(){return _velocity;};
 
   PVector direction(){return _direction;}
+
+  void attraction(float p){};
   
   EntityType type(){return EntityType.Player;}
 
-  void callCollidingEvent(EntityType type){}
+  void callCollidingEvent(EntityType type){
+    if(type == EntityType.Crown){
+      charisma+=5000;
+    }
+  }
 
   void fishes(List<Fish> arr){
   }
@@ -66,4 +87,5 @@ class Player implements Entity, Fish{
   private PVector _direction;
   private PVector _velocity;
   private int maxSpeed = 5;
+  private float charisma = 0;
 }

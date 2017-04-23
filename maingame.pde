@@ -22,16 +22,37 @@ class Game extends Scene{
     
     Enemy enemy = new Enemy(0,0);
     _entities.add(enemy);
+
+    // Crown crown = new Crown();
+    // _entities.add(crown);
     
     for(int i = 0; i < 50; i++){
-      Egg egg = new Egg(640+i*10,640, 5*60*30-i*5*60*30/50);
+      Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
       _entities.add(egg);
     }
   }
 
   void update(){
     //_player.target(new PVector(mouseX, mouseY));
+    println(_counter);
+    if(int(_counter)%2000 == 0){
+      spawnCrown();
+    }
+
+    if(_mousePressing && _player.charisma > 0){
+      _player.charisma-=1.0f;
+      float attraction = 4.0;
+      for(Fish fish: _fishes){
+        fish.attraction(attraction);
+      }
+    }else{
+      for(Fish fish: _fishes){
+        fish.attraction(0.0);
+      }
+    }
+
     _boidsManager.update(_player.position(), _fishes);
+
 
     for(Entity entity : _entities){
       entity.update();
@@ -39,9 +60,61 @@ class Game extends Scene{
 
     spawnEggs();
     updateEntities();
+    checkFinished();
+
+    _counter++;
   }
 
-  void spawnEggs(){
+
+
+  void draw(){
+    resources.draw("background.png", 0, 0);
+    for(Entity entity : _entities){
+      pushMatrix();
+      translate(entity.x(), entity.y());
+      entity.draw();
+      popMatrix();
+    }
+  }
+
+  void mousePressed(){
+    _mousePressing = true;
+  }
+
+  void mouseReleased(){
+    _mousePressing = false;
+  }
+
+  Scene nextScene(){
+    if(isGameClear)return(new Gameclear());
+    return(new Gameover());
+  }
+
+  private CollisionDetector _collisionDetector;
+  private BoidsManager _boidsManager;
+  private List<Entity> _entities = new ArrayList<Entity>();
+  private List<Fish> _fishes     = new ArrayList<Fish>();
+  private Player _player;
+  private boolean isGameClear = false;
+  private boolean _mousePressing = false;
+  private float _counter = 0;
+
+  private void spawnCrown(){
+    Crown crown = new Crown();
+    _entities.add(crown);
+  }
+
+  private void updateEntities(){
+    _collisionDetector.update(_entities);
+
+    ListIterator<Entity> itr = _entities.listIterator();
+    while(itr.hasNext()){
+      Entity entity = itr.next();
+      if(entity.shouldDie())itr.remove();
+    }
+  }
+
+  private void spawnEggs(){
     ListIterator<Entity> itr = _entities.listIterator();
     while(itr.hasNext()){
       Entity entity = itr.next();
@@ -54,40 +127,47 @@ class Game extends Scene{
     }
   }
 
-  void draw(){
-    resources.draw("background.png", 0, 0);
+  private void checkFinished(){
+    int eatenEggs = 0; //TODO
+    int eggs = 0;
     for(Entity entity : _entities){
-      pushMatrix();
-      translate(entity.x(), entity.y());
-      entity.draw();
-      popMatrix();
+      if(entity.type() == EntityType.Egg)eggs++;
+    }
+
+    if(eggs == 0){
+      _isFinish = true;
+      isGameClear = true;//TODO
     }
   }
-  void mousePressed(){
-    _isFinish = true;
-    if(mouseButton == LEFT){
-      isGameClear = true;
+
+  private float fishDensity(){
+    PVector avgPosition = fishAvgPosition();
+    int count = 0;
+    float sum = 0;
+    for(Fish fish: _fishes){
+      PVector diff = PVector.sub(avgPosition, fish.position());
+      sum = PVector.dot(diff, diff);
+      count++;
     }
+    return sum/float(_fishes.size());
   }
-  Scene nextScene(){
-    if(isGameClear)return(new Gameclear());
-    return(new Gameover());
-  }
-  private CollisionDetector _collisionDetector;
-  private BoidsManager _boidsManager;
-  private List<Entity> _entities = new ArrayList<Entity>();
-  private List<Fish> _fishes     = new ArrayList<Fish>();
-  private Player _player;
-  private boolean isGameClear = false;
-  private void updateEntities(){
-    _collisionDetector.update(_entities);
+
+  private PVector fishAvgPosition(){
+    PVector sum = new PVector();
+    for(Fish fish: _fishes){
+      sum.add(fish.position());
+    }
+    return sum.div(float(_fishes.size()));
   }
 }
 
 Resources resources = new Resources();
 Scene currentScene;
 
+PVector screenSize;
+
 void setup(){
+  screenSize = new PVector(1280, 720);
   //720p
   size(1280, 720);
   resources.minim = new Minim(this);
