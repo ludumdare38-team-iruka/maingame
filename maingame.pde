@@ -11,7 +11,7 @@ class Game extends Scene{
     _collisionDetector = new CollisionDetector();
     _boidsManager = new BoidsManager();
 
-    _player = new Player(200, 200);
+    _player = new Player(500, 200);
     _entities.add(_player);
     _fishes.add(_player);
 
@@ -24,9 +24,17 @@ class Game extends Scene{
     
     Egg egg = new Egg(0,0);
     _entities.add(egg);
+
+    for(int i = 0; i < 10; i++){
+      Minion m = new Minion(20+i, 20*i);
+      _entities.add(m);
+      _fishes.add(m);
+    }
   }
 
   void update(){
+    _boidsManager.update(_fishes);
+
     for(Entity entity : _entities){
       entity.update();
     }
@@ -74,6 +82,7 @@ void setup(){
 }
 
 void draw(){
+  background(128);
   currentScene.update();
   currentScene.draw();
   if(currentScene.isFinish()){

@@ -9,11 +9,12 @@ class Minion implements Entity, Fish{
   }
   
   void update(){
+    _position = PVector.add(_position, _velocity);
   }
   
   void draw(){
     pushMatrix();
-    scale(0.5);
+    scale(0.2);
     resources.draw("minion.png");
     popMatrix();
   }
@@ -40,12 +41,12 @@ class Minion implements Entity, Fish{
 
   void calcVelocity(){
     float r1 = 1.0;
-    float r2 = 0.8;
-    float r3 = 0.1;
-    _v1 = calcCenter().mult(r1);
-    _v2 = calcAvoid().mult(r2);
-    _v3 = calcAverage().mult(r3);
-    _velocity = _v1.add(_v2).add(_v3);
+    float r2 = 0.5;
+    float r3 = 1.0;
+    _v1 = PVector.mult(calcCenter(),r1);
+    _v2 = PVector.mult(calcAvoid(),r2);
+    _v3 = PVector.mult(calcAverage(),r3);
+    _velocity = PVector.add(_v1, _v2, _v3);
   }
 
   private PVector _position;
@@ -63,20 +64,24 @@ class Minion implements Entity, Fish{
     PVector v = new PVector(0, 0);
     for(Fish fish : _fishes){
       if(this.equals(fish))continue;
-      v = v.add(fish.position());
+      v.add(fish.position());
     }
-    v = v.div(_fishes.size()- 1);
-    v = (v.sub(this._position)).div(centerPullFactor);
+    v.div(_fishes.size()- 1);
+    v.sub(this._position).div(centerPullFactor);
     return v;
   }
 
   private PVector calcAvoid(){
-    float distThreshold = 30;
+    float distThreshold = 60;
     PVector v = new PVector(0, 0);
     for(Fish fish : _fishes){
       if(this.equals(fish))continue;
-      if(fish.position().dist(this.position()) < distThreshold){
-        v = v.sub(fish.position().sub(this.position()));
+      float dist = PVector.dist(this._position, fish.position());
+      if(dist < distThreshold){
+        PVector direct = PVector.sub(fish.position(), this._position);
+        PVector directNormal = new PVector();
+        directNormal.set(direct).normalize();
+        v.sub(PVector.mult(directNormal, -dist+distThreshold));
       }
     }
     return v;
@@ -86,11 +91,11 @@ class Minion implements Entity, Fish{
     PVector v = new PVector(0, 0);
     for(Fish fish : _fishes){
       if(this.equals(fish))continue;
-      v = v.add(fish.velocity());
+      v.add(fish.velocity());
     }
 
-    v = v.div(_fishes.size()-1);
-    v = (v.sub(this._velocity)).mult(0.5);
+    v.div(_fishes.size()-1);
+    v.sub(this._velocity).mult(0.5);
     return v;
   };
 }
