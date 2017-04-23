@@ -20,8 +20,14 @@ class Enemy implements Entity{
     _position.x += ex;
     _position.y += ey;
     
-    _direction.x = ex;
-    _direction.y = ey;
+    if(_position.x >= _target.x || _position.y >= _target.y){
+      _direction.x = 0;
+      _direction.y = 0;
+    }else if(_position.x < _target.x){
+      _direction.x = ex;      
+    }else if(_position.y < _target.y){
+      _direction.y = ey;
+    }
   }
   
   void draw(){
@@ -31,8 +37,9 @@ class Enemy implements Entity{
     angle = atan2(_direction.y, _direction.x);
     
     pushMatrix();
+    
     rotate(angle);
-    if(angle >= PI/2){
+    if(_direction.x > 0){
       scale(-0.5,0.5);
     }else{
       scale(0.5);
@@ -40,6 +47,7 @@ class Enemy implements Entity{
     resources.draw("maguro.png");
     popMatrix();
   
+
   }
   boolean shouldDie(){return false;}
   void die(){}
