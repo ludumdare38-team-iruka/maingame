@@ -3,6 +3,8 @@ interface Entity{
   void draw();
   boolean shouldDie();
   void die();
+  float life();
+  float age();
 
   int width();
   int height();

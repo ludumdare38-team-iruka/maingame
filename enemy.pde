@@ -16,6 +16,8 @@ class Enemy implements Entity{
   }
   boolean shouldDie(){return false;}
   void die(){}
+  float life(){return 0;};
+  float age(){return 0;};
 
   int width(){return 0;}
   int height(){return 0;}
@@ -29,4 +31,3 @@ class Enemy implements Entity{
 
   private PVector _position = new PVector();
 }
-  

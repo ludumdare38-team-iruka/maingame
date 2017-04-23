@@ -20,6 +20,8 @@ class Minion implements Entity, Fish{
   }
   boolean shouldDie(){return false;}
   void die(){}
+  float life(){return 0;}
+  float age(){return 0;}
 
   int width(){return 0;}
   int height(){return 0;}
@@ -44,16 +46,17 @@ class Minion implements Entity, Fish{
   }
 
   void calcVelocity(){
-    float r1 = 0.0;
+    float r1 = 1.5;
     float r2 = 0.5;
-    float r3 = 1.0;
+    float r3 = 0.5;
+    float r4 = 0.0;
     _v1 = PVector.mult(calcCenter(),r1);
     _v2 = PVector.mult(calcAvoid(),r2);
     _v3 = PVector.mult(calcAverage(),r3);
 
     PVector vTarget = new PVector();
     if(PVector.dist( _target, this._position) > 30){
-      vTarget = PVector.sub(_target, this._position).normalize().mult(4.0);
+      vTarget = PVector.sub(_target, this._position).normalize().mult(r4);
     }
 
     _velocity = PVector.add(_v1, _v2, _v3).add(vTarget);
