@@ -9,6 +9,7 @@ enum GameState{
 import java.util.ListIterator;
 class Game extends Scene{
   Game(){
+    resources.loop("play.mp3");
     _collisionDetector = new CollisionDetector();
     _boidsManager = new BoidsManager();
 
@@ -137,6 +138,7 @@ class Game extends Scene{
     }
 
     if(eggs == 0){
+      resources.close("play.mp3");
       _isFinish = true;
       isGameClear = true;//TODO
     }
