@@ -1,5 +1,9 @@
 class Opening extends Scene{
-  void update(){}
+  Opening(){
+    resources.loop("title.mp3");
+  }
+  void update(){
+  }
   void draw(){}
   Scene nextScene(){
     return(new Tutorial());
