@@ -43,6 +43,7 @@ class Game extends Scene{
   }
 
   void draw(){
+    resources.draw("background.png", 0, 0);
     for(Entity entity : _entities){
       pushMatrix();
       translate(entity.x(), entity.y());
