@@ -1,7 +1,7 @@
 class Minion implements Entity, Fish{
   Minion(float x, float y){
     _position     = new PVector(x, y);
-    _velocity     = new PVector(0, 0);
+    _velocity     = new PVector(random(-5, 5), -2);
     _acceleration = new PVector(0, 0);
 
     _v1 = new PVector();
