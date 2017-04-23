@@ -3,5 +3,7 @@ class Gameclear extends Scene{
   void draw(){
     resources.draw("gameclear.png",0,0);
   }
-  boolean isFinish(){return true;}
+  void mousePressed(){
+    _isFinish = true;
+  }
 }
