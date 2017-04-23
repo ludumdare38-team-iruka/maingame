@@ -6,7 +6,12 @@ class Player implements Entity, Fish{
     _velocity = new PVector(0, 0);
   }
   
-  void update(){}
+  void update(){
+    if(charisma>0){
+      charisma-=1.0;
+      charisma = max(charisma, 0);
+    }
+  }
   
   void draw(){
     
@@ -36,6 +41,8 @@ class Player implements Entity, Fish{
   PVector velocity(){return _velocity;};
 
   PVector direction(){return _direction;}
+
+  void attraction(float p){};
   
   EntityType type(){return EntityType.Player;}
 
@@ -51,4 +58,5 @@ class Player implements Entity, Fish{
   private PVector _position;
   private PVector _direction;
   private PVector _velocity;
+  private float charisma = 0;
 }

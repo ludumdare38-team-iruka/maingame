@@ -1,7 +1,8 @@
 class Minion implements Entity, Fish{
   Minion(float x, float y){
     _position     = new PVector(x, y);
-    _velocity     = new PVector(random(-5, 5), -2);
+    // _velocity     = new PVector(random(-5, 5), -2);
+    _velocity     = new PVector(5, -2);
     _acceleration = new PVector(0, 0);
 
     _v1 = new PVector();
@@ -44,6 +45,10 @@ class Minion implements Entity, Fish{
   int width(){return 0;}
   int height(){return 0;}
 
+  void attraction(float p){
+    _attraction = p;
+  };
+
   float x(){return _position.x;}
   float y(){return _position.y;}
   PVector position(){return _position;};
@@ -65,8 +70,8 @@ class Minion implements Entity, Fish{
 
   void calcVelocity(){
     float r1 = 1.0;
-    float r2 = 1.5;
-    float r3 = 1.0;
+    float r2 = 3.5;
+    float r3 = 4.0;
     float r4 = 0.0;
     PVector a1 = PVector.mult(calcCenter() ,r1);
     PVector a2 = PVector.mult(calcAvoid()  ,r2);
@@ -77,7 +82,7 @@ class Minion implements Entity, Fish{
     //   aTarget = PVector.sub(_target, this._position).normalize().mult(r4);
     // }
 
-    _acceleration = PVector.add(a1, a2, a3);
+    _acceleration = PVector.add(a1, a2, a3).div(2.0f);
 
   }
 
@@ -95,16 +100,17 @@ class Minion implements Entity, Fish{
   private PVector _target;
   private float _velocityLimit;
   private float _forceLimit;
+  private float _attraction = 0;
 
   private PVector calcCenter(){
-    float neighbordist = 50;
+    float neighbordist = 50*_attraction;
     PVector sum = new PVector(0, 0);
     int count = 0;
     for (Fish fish: _fishes) {
       if(this.equals(fish))continue;
       float d = PVector.dist(this._position, fish.position());
       if ((d > 0) && (d < neighbordist)) {
-        sum.add(PVector.sub(fish.position(), this._position));
+        sum.add(fish.position());
         count++;
       }
     }
@@ -118,7 +124,7 @@ class Minion implements Entity, Fish{
   }
 
   private PVector calcAvoid(){
-    float distThreshold = 25;
+    float distThreshold = 50;
     PVector v = new PVector(0, 0);
     int count = 0;
     for(Fish fish : _fishes){
@@ -137,19 +143,39 @@ class Minion implements Entity, Fish{
 
   };
   private PVector calcAverage(){
-    PVector v = new PVector(0, 0);
-    for(Fish fish : _fishes){
-      if(this.equals(fish))continue;
-      v.add(fish.velocity());
+    float neighbordist = 100;
+    PVector sum = new PVector(0, 0);
+    int count = 0;
+    for (Fish fish: _fishes) {
+      float d = PVector.dist(_position, fish.position());
+      if ((d > 0) && (d < neighbordist)) {
+        sum.add(fish.velocity());
+        count++;
+      }
     }
+    if (count > 0) {
+      sum.div((float)count);
+      // First two lines of code below could be condensed with new PVector setMag() method
+      // Not using this method until Processing.js catches up
+      // sum.setMag(maxspeed);
 
-    v.div(_fishes.size()-1);
-    v.sub(this._velocity).mult(0.5);
-    return v;
+      // Implement Reynolds: Steering = Desired - Velocity
+      sum.normalize();
+      sum.mult(_velocityLimit);
+      PVector steer = PVector.sub(sum, _velocity);
+      steer.limit(_forceLimit);
+      return steer;
+    } 
+    else {
+      return new PVector(0, 0);
+    }
   };
 
   private PVector seek(PVector target) {
     PVector desired = PVector.sub(_target, _position);  // A vector pointing from the position to the target
+    if(desired.mag() > 200){
+      desired = PVector.sub(target, _position);  // A vector pointing from the position to the target
+    }
     // Scale to maximum speed
     desired.normalize();
     desired.mult(_velocityLimit);

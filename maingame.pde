@@ -33,6 +33,11 @@ class Game extends Scene{
     _player.position(new PVector(mouseX, mouseY));
     _boidsManager.update(_player.position(), _fishes);
 
+    float attraction = 4.0;
+    for(Fish fish: _fishes){
+      fish.attraction(attraction);
+    }
+
     for(Entity entity : _entities){
       entity.update();
     }
@@ -45,6 +50,8 @@ class Game extends Scene{
 
 
   void draw(){
+    println("fishDensity", 1.0f/fishDensity()*1000f);
+
     resources.draw("background.png", 0, 0);
     for(Entity entity : _entities){
       pushMatrix();
@@ -61,6 +68,7 @@ class Game extends Scene{
     if(isGameClear)return(new Gameclear());
     return(new Gameover());
   }
+
   private CollisionDetector _collisionDetector;
   private BoidsManager _boidsManager;
   private List<Entity> _entities = new ArrayList<Entity>();
@@ -95,6 +103,26 @@ class Game extends Scene{
       _isFinish = true;
       isGameClear = true;//TODO
     }
+  }
+
+  private float fishDensity(){
+    PVector avgPosition = fishAvgPosition();
+    int count = 0;
+    float sum = 0;
+    for(Fish fish: _fishes){
+      PVector diff = PVector.sub(avgPosition, fish.position());
+      sum = PVector.dot(diff, diff);
+      count++;
+    }
+    return sum/float(_fishes.size());
+  }
+
+  private PVector fishAvgPosition(){
+    PVector sum = new PVector();
+    for(Fish fish: _fishes){
+      sum.add(fish.position());
+    }
+    return sum.div(float(_fishes.size()));
   }
 }
 

@@ -4,4 +4,5 @@ interface Fish extends Entity{
   PVector velocity();
   void calcVelocity();
   void target(PVector p);
+  void attraction(float p);
 }
