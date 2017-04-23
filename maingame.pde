@@ -29,6 +29,7 @@ class Game extends Scene{
     for(int i = 0; i < 50; i++){
       Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
       _entities.add(egg);
+      
     }
   }
 
@@ -122,6 +123,7 @@ class Game extends Scene{
         Minion m = new Minion(entity.position().x, entity.position().y);
         itr.set(m);
         _fishes.add(m);
+        resources.trigger("SE-3.mp3");
         // itr.remove();
       }
     }
