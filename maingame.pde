@@ -24,7 +24,7 @@ class Game extends Scene{
     _entities.add(enemy);
     
     for(int i = 0; i < 50; i++){
-      Egg egg = new Egg(640+i*10,640, 5*60*30-i*5*60*30/50);
+      Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
       _entities.add(egg);
     }
   }
@@ -42,31 +42,7 @@ class Game extends Scene{
     checkFinished();
   }
 
-  private void checkFinished(){
-    int eatenEggs = 0; //TODO
-    int eggs = 0;
-    for(Entity entity : _entities){
-      if(entity.type() == EntityType.Egg)eggs++;
-    }
 
-    if(eggs == 0){
-      _isFinish = true;
-      isGameClear = true;//TODO
-    }
-  }
-
-  void spawnEggs(){
-    ListIterator<Entity> itr = _entities.listIterator();
-    while(itr.hasNext()){
-      Entity entity = itr.next();
-      if(entity.type() == EntityType.Egg && entity.age() > 5*60*30){
-        Minion m = new Minion(entity.position().x, entity.position().y);
-        itr.set(m);
-        _fishes.add(m);
-        // itr.remove();
-      }
-    }
-  }
 
   void draw(){
     resources.draw("background.png", 0, 0);
@@ -93,6 +69,32 @@ class Game extends Scene{
   private boolean isGameClear = false;
   private void updateEntities(){
     _collisionDetector.update(_entities);
+  }
+
+  private void spawnEggs(){
+    ListIterator<Entity> itr = _entities.listIterator();
+    while(itr.hasNext()){
+      Entity entity = itr.next();
+      if(entity.type() == EntityType.Egg && entity.age() > 5*60*30){
+        Minion m = new Minion(entity.position().x, entity.position().y);
+        itr.set(m);
+        _fishes.add(m);
+        // itr.remove();
+      }
+    }
+  }
+
+  private void checkFinished(){
+    int eatenEggs = 0; //TODO
+    int eggs = 0;
+    for(Entity entity : _entities){
+      if(entity.type() == EntityType.Egg)eggs++;
+    }
+
+    if(eggs == 0){
+      _isFinish = true;
+      isGameClear = true;//TODO
+    }
   }
 }
 
