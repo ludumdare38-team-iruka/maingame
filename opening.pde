@@ -8,7 +8,7 @@ class Opening extends Scene{
     resources.draw("title.png",0,0);
     pushMatrix();
     translate(640,580);
-    if(frameCount%60 != 0){
+    if(frameCount%60 != 0 && frameCount%60 != 1 && frameCount%60 != 2){
       resources.draw("gamestart.png");
     }
       
