@@ -82,7 +82,7 @@ class Minion implements Entity, Fish{
   private PVector _v2 = new PVector();
   private PVector _v3 = new PVector();
   private PVector _target;
-  private int maxSpeed = 1;
+  private int maxSpeed = 0;
 
   private PVector calcCenter(){
     float centerPullFactor = 300;
