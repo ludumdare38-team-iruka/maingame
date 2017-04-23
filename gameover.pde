@@ -3,5 +3,7 @@ class Gameover extends Scene{
   void draw(){
     resources.draw("gameover.png", 0, 0);
   }
-  boolean isFinish(){return true;}
+  void mousePressed(){
+    _isFinish = true;
+  }
 }
