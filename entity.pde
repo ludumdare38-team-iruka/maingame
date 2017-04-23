@@ -9,6 +9,7 @@ interface Entity{
 
   float x();
   float y();
+  PVector position();
   
   EntityType type();
   void callCollidingEvent(EntityType type);
