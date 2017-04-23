@@ -14,7 +14,7 @@ class Minion implements Entity, Fish{
   
   void draw(){
     float angle;
-    if(_velocity.magSq() <= maxSpeed){
+    if(_velocity.mag() < maxSpeed){
       angle = 0;
     }else{
       angle = _velocity.heading();
@@ -82,7 +82,7 @@ class Minion implements Entity, Fish{
   private PVector _v2 = new PVector();
   private PVector _v3 = new PVector();
   private PVector _target;
-  private int maxSpeed = 0;
+  private int maxSpeed = 1;
 
   private PVector calcCenter(){
     float centerPullFactor = 300;
