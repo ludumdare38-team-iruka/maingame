@@ -7,7 +7,7 @@ enum GameState{
 }
 
 class Game extends Scene{
-  void setup(){
+  Game(){
     _collisionDetector = new CollisionDetector();
     _player = new Player(200, 200);
     _entities.add(_player);
@@ -57,9 +57,7 @@ void setup(){
   //720p
   size(1280, 720);
   resources.minim = new Minim(this);
-  Game game = new Game();
-  game.setup();
-  currentScene = game;
+  currentScene = new Game();
 }
 
 void draw(){
