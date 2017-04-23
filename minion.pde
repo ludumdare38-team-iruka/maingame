@@ -39,14 +39,24 @@ class Minion implements Entity, Fish{
     _fishes = arr;
   }
 
+  void target(PVector p){
+    _target = p;
+  }
+
   void calcVelocity(){
-    float r1 = 1.0;
+    float r1 = 0.0;
     float r2 = 0.5;
     float r3 = 1.0;
     _v1 = PVector.mult(calcCenter(),r1);
     _v2 = PVector.mult(calcAvoid(),r2);
     _v3 = PVector.mult(calcAverage(),r3);
-    _velocity = PVector.add(_v1, _v2, _v3);
+
+    PVector vTarget = new PVector();
+    if(PVector.dist( _target, this._position) > 30){
+      vTarget = PVector.sub(_target, this._position).normalize().mult(4.0);
+    }
+
+    _velocity = PVector.add(_v1, _v2, _v3).add(vTarget);
   }
 
   private PVector _position;
@@ -58,6 +68,7 @@ class Minion implements Entity, Fish{
   private PVector _v1 = new PVector();
   private PVector _v2 = new PVector();
   private PVector _v3 = new PVector();
+  private PVector _target;
 
   private PVector calcCenter(){
     float centerPullFactor = 300;
