@@ -89,7 +89,6 @@ class Minion implements Entity, Fish{
     
     // PVector aTarget = new PVector();
     // if(PVector.dist( _target, this._position) > 30){
-    //   aTarget = PVector.sub(_target, this._position).normalize().mult(r4);
     // }
 
     _acceleration = PVector.add(a1, a2, a3).div(2.0f);
@@ -111,6 +110,7 @@ class Minion implements Entity, Fish{
   private float _velocityLimit;
   private float _forceLimit;
   private float _attraction = 0;
+  private int maxSpeed = 0;
 
   private PVector calcCenter(){
     float neighbordist = 70*_attraction;
