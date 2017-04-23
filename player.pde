@@ -22,28 +22,36 @@ class Player implements Entity, Fish{
   
   void draw(){
     float angle;
-    if(_direction.mag() < maxSpeed / 2){
+    pushMatrix();
+    if(_direction.mag() < maxSpeed){
       angle = 0;
     }else{
-      angle = _direction.heading();
+      if(_direction.x>0){
+        PVector tmp =  new PVector(_direction.x, _direction.y);
+        angle = tmp.heading();
+      }else{
+        PVector tmp =  new PVector(-_direction.x, -_direction.y);
+        angle = tmp.heading();
+      }
     }
-    pushMatrix();
+    angle = max(min(angle, PI*0.3), -PI*0.3);
     rotate(angle);
-    if(abs(degrees(angle)) >=90){
-      scale(1, -1);
+    if(_direction.x>0){
+      scale(0.2, 0.2);
+    }else{
+      scale(-0.2, 0.2);
     }
-    scale(0.2);
     resources.draw("player.png");
-    popMatrix();
     if(charisma > 0){
       drawCrown();
     }
+    popMatrix();
   }
 
   private void drawCrown(){
     pushMatrix();
-    translate(8, -17);
-    scale(0.1);
+    translate(40, -85);
+    scale(0.5);
     resources.draw("crown.png");
     popMatrix();
   }
