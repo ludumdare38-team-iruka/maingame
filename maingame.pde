@@ -41,6 +41,7 @@ class Game extends Scene{
     for(Enemy enemy: _enemies){
       float dist = _player.position().dist(enemy.position());
       if(dist < _player.width()){
+        if(_counter%15 == 0 && enemy.life()>0)resources.trigger("SE-7.mp3");
         enemy.life(enemy.life()-_attack);
       }
     }

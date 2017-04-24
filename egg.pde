@@ -7,7 +7,7 @@ class Egg implements Entity{
   void update(){
     _age++;
     if(_life<0)_shouldDie = true;
-    if(_shouldDie) resources.trigger("SE-7.mp3");
+    if(_shouldDie) resources.trigger("SE-2.mp3");
   }
   
   void draw(){
