@@ -18,6 +18,7 @@ class Player implements Entity, Fish{
       charisma-=2.0;
       charisma = max(charisma, 0);
     }
+    _attack = 0;
   }
   
   void draw(){
@@ -55,6 +56,7 @@ class Player implements Entity, Fish{
     resources.draw("crown.png");
     popMatrix();
   }
+  float attack(){return _attack;}
 
   boolean shouldDie(){return false;}
   void die(){}
@@ -83,6 +85,10 @@ class Player implements Entity, Fish{
       resources.trigger("SE-5.mp3");
       charisma+=5000;
     }
+
+    if(entity.type() == EntityType.Minion){
+      _attack += 1;
+    }
   }
 
   void fishes(List<Fish> arr){
@@ -97,4 +103,5 @@ class Player implements Entity, Fish{
   private PVector _velocity;
   private int maxSpeed = 5;
   private float charisma = 0;
+  private float _attack = 0;
 }
