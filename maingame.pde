@@ -277,11 +277,19 @@ class Game extends Scene{
     popMatrix();
     
     pushMatrix();
-    translate(1100,screenSize.y-60);
+    translate(1100, screenSize.y-80);
+    scale(0.3);
+    resources.draw("minion.png");
+    drawScore();
+    popMatrix();
+    
+    pushMatrix();
+    translate(1100,screenSize.y-40);
     scale(0.3);
     resources.draw("egg.png");
     drawEggLife();
     popMatrix();
+    
   }
   
   private void drawGage(){
@@ -291,6 +299,25 @@ class Game extends Scene{
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
   }
+  
+  private void drawScore(){
+    String str;
+    String[] life;
+    
+    str = nf(_initialEggs - _eggs, 3);
+    life = str.split("");
+    
+    for(int i=0; i<str.length(); i++){
+      if(i == 0){
+        translate(150, 0);
+      }else if(i == 1){
+        translate(100, 0);
+      }else if(i == 2){
+        translate(100, 0);
+      }
+      resources.draw(life[i] + ".png");
+    }
+  }   
   
   private void drawEggLife(){
     String str;
