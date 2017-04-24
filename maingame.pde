@@ -69,7 +69,6 @@ class Game extends Scene{
 
 
   void draw(){
-    println("eatenEggs", _eatenEggs);
     resources.draw("background.png", 0, 0);
     for(Entity entity : _entities){
       pushMatrix();
@@ -77,6 +76,7 @@ class Game extends Scene{
       entity.draw();
       popMatrix();
     }
+    drawUserInterface();
   }
 
   void mousePressed(){
@@ -199,6 +199,20 @@ class Game extends Scene{
       sum.add(fish.position());
     }
     return sum.div(float(_fishes.size()));
+  }
+
+  private void drawUserInterface(){
+    pushMatrix();
+    translate(0, screenSize.y-100);
+    drawGage();
+    popMatrix();
+  }
+  private void drawGage(){
+    float rate = 1.0;
+    rate = min(max(log(fishDensity()), 0), 1);
+    fill(255, 32, 64);
+    rect(60, 26, rate*315f, 40);
+    resources.draw("gage.png", 0, 0);
   }
 }
 
