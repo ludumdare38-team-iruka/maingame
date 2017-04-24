@@ -126,14 +126,26 @@ class Game extends Scene{
   private int _eatenEggs   = 0;
 
   private void spawnEnemies(){
-    if(_counter < 2*60*30){
-      if(int(_counter+1)%600== 0){
+    if(_counter < 1*60*30){
+      if(int(_counter+1)%1000== 0){
         spawnJellyFish();
       }
     }
 
-    if( 2*60*30 < _counter && _counter < 5*60*30){
-      if(int(_counter+1)%1000 == 0){
+    if( 1*60*30 < _counter && _counter < 2*60*30){
+      if(int(_counter+1)%800 == 0){
+        spawnOctopus();
+      }
+    }
+
+    if( 3*60*30 < _counter && _counter < 4*60*30){
+      if(int(_counter+1)%600 == 0){
+        spawnSeahorse();
+      }
+    }
+
+    if( 4*60*30 < _counter && _counter < 5*60*30){
+      if(int(_counter+1)%400 == 0){
         spawnMaguro();
       }
     }
@@ -150,6 +162,19 @@ class Game extends Scene{
     _entities.add(jellyFish);
     _enemies.add(jellyFish);
   }
+
+  private void spawnOctopus(){
+    Octopus enemy= new Octopus(random(0, screenSize.x), 0, 640+random(-50, 50), 650);
+    _entities.add(enemy);
+    _enemies.add(enemy);
+  }
+
+  private void spawnSeahorse(){
+    Seahorse enemy= new Seahorse(random(0, screenSize.x), 0, 640+random(-50, 50), 650);
+    _entities.add(enemy);
+    _enemies.add(enemy);
+  }
+
 
   private void spawnCrown(){
     Crown crown = new Crown();
