@@ -53,9 +53,9 @@ class Maguro implements Entity, Enemy{
     
     rotate(angle);
     if(_direction.x > 0){
-      scale(-0.5,0.5);
+      scale(-0.3,0.3);
     }else{
-      scale(0.5);
+      scale(0.3);
     }
     resources.draw("maguro.png");
     popMatrix();
