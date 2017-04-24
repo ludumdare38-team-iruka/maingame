@@ -33,8 +33,12 @@ class Game extends Scene{
     if(int(_counter)%2000 == 0){
       spawnCrown();
     }
-
+        
     if(_mousePressing && _player.charisma > 0){
+      if(charismaFlag == true){
+        resources.trigger("SE-6.mp3");
+        charismaFlag = false;
+      }
       _player.charisma-=1.0f;
       float attraction = 4.0;
       for(Fish fish: _fishes){
@@ -76,6 +80,7 @@ class Game extends Scene{
   }
 
   void mousePressed(){
+    charismaFlag = true;
     _mousePressing = true;
   }
 
@@ -96,6 +101,7 @@ class Game extends Scene{
   private Player _player;
   private boolean isGameClear = false;
   private boolean _mousePressing = false;
+  private boolean charismaFlag = false;
   private float _counter = 0;
   private int _initialEggs = 0;
   private int _eggs = 0;
