@@ -177,8 +177,17 @@ class Game extends Scene{
 
     if(_eggs == 0){
       resources.close("play.mp3");
-      _isFinish = true;
-      _isGameClear = _eatenEggs < _initialEggs/2;
+      fill(0,180);
+      rect(0, 0, width, height);
+      pushMatrix();
+      translate(width/2, height/2);
+      resources.draw("finish.png");
+      popMatrix();
+
+      if(_mousePressing){
+          _isFinish = true;
+          _isGameClear = _eatenEggs < _initialEggs/2;
+      }
     }
   }
 
