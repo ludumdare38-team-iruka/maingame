@@ -61,8 +61,8 @@ class Player implements Entity, Fish{
   float life(){return 0;}
   float age(){return 0;}
 
-  int width(){return 10;}
-  int height(){return 10;}
+  int width(){return 150;}
+  int height(){return 200;}
 
   float x(){return _position.x;}
   float y(){return _position.y;}
