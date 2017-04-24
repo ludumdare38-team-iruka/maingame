@@ -12,6 +12,7 @@ class Maguro implements Entity, Enemy{
     }else{
 
     }
+    _status = MaguroStatus.Move;
 
     _life -= _fishDensity;
     _fishDensity = 0;
@@ -41,7 +42,6 @@ class Maguro implements Entity, Enemy{
     }else if(_position.y < _target.y){
       _direction.y = ey;
     }
-    _status = MaguroStatus.Move;
   }
   
   void draw(){
