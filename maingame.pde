@@ -59,7 +59,7 @@ class Game extends Scene{
     if(seCount > 0 || (_mousePressing && _player.charisma > 0)){
       seCount++;
     }
-    if(seCount > 60){
+    if(seCount > 40){
       seCount = 0;
       resources.close("SE-6.mp3");
     }
