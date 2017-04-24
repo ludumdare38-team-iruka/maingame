@@ -87,7 +87,7 @@ class Maguro implements Entity, Enemy{
   private PVector _position = new PVector();
   private PVector _direction = new PVector();
   private PVector _target = new PVector();
-  private float _life = 1000;
+  private float _life = 200;
   private float _fishDensity = 0;
   private boolean _shouldDie = false;
   private MaguroStatus _status = MaguroStatus.Move;
