@@ -122,7 +122,7 @@ class Game extends Scene{
       }else{
         //ポーズ解除時の音が完成したら書換える
         //resources.play("");
-        resources.play("play.mp3");
+        resources.loop("play.mp3");
       }
     }
   }
