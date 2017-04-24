@@ -164,7 +164,7 @@ class Game extends Scene{
   private int _eatenEggs   = 0;
 
   private void spawnEnemies(){
-    if(_counter < 1*60*30){
+    if(20*30 < _counter && _counter < 1*60*30){
       if(int(_counter+1)%1000== 0){
         spawnJellyFish();
       }
@@ -288,7 +288,6 @@ class Game extends Scene{
     fill(255, 32, 64);
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
-    println("attack", _attack);
   }
   
   private void drawEggLife(){
