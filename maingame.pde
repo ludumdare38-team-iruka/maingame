@@ -206,13 +206,34 @@ class Game extends Scene{
     translate(0, screenSize.y-100);
     drawGage();
     popMatrix();
+    
+    pushMatrix();
+    translate(100,100);
+    drawEggLife();
+    popMatrix();
   }
+  
   private void drawGage(){
     float rate = 1.0;
     rate = min(max(log(fishDensity()), 0), 1);
     fill(255, 32, 64);
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
+  }
+  
+  private void drawEggLife(){
+    String str;
+    String[] life;
+    
+    str = String.value0f();
+    life = new String[str.length()];
+    
+    for(int i=0; i<str.length(); i++){
+      life[i] = String.value0f(str.charAt(i));
+   
+      scale(0.4);
+      resources.draw(life[i] + ".png");
+    }
   }
 }
 
