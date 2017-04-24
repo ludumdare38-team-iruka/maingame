@@ -89,8 +89,8 @@ class Game extends Scene{
   }
 
   Scene nextScene(){
-    if(_isGameClear)return(new Gameclear());
-    return(new Gameover());
+    if(_isGameClear)return(new Gameclear(_initialEggs - _eatenEggs));
+    return(new Gameover(_initialEggs - _eatenEggs));
   }
 
   private CollisionDetector _collisionDetector;
