@@ -29,11 +29,11 @@ class Game extends Scene{
     if(int(_counter+1)%1000 == 0){
       spawnMaguro();
     }
-
+    
     if(int(_counter)%2000 == 0){
       spawnCrown();
     }
-        
+
     if(_mousePressing && _player.charisma > 0){
       if(charismaFlag == true){
         resources.trigger("SE-6.mp3");
@@ -53,7 +53,7 @@ class Game extends Scene{
     _boidsManager.update(_player.position(), _fishes);
 
     float fishDensity = fishDensity();
-    updateEnemies(fishDensity);
+    updateEnemies(fishDensity*2.0f);
 
     for(Entity entity : _entities){
       entity.update();
@@ -183,14 +183,18 @@ class Game extends Scene{
 
   private float fishDensity(){
     PVector avgPosition = fishAvgPosition();
-    int count = 0;
     float sum = 0;
+    int count = 0;
     for(Fish fish: _fishes){
-      PVector diff = PVector.sub(avgPosition, fish.position());
-      sum = PVector.dot(diff, diff);
+      // if(_player.equals(fish))continue;
+      PVector diff = PVector.sub(_player.position(), fish.position());
+      // PVector diff = PVector.sub(fishAvgPosition(), fish.position());
+      float norm = diff.mag();
+      sum += norm*norm;
       count++;
     }
-    return 1.0/sum*float(_fishes.size())*1000;
+    float result = (sum/count);
+    return 1.0f/sqrt(result)*50;
   }
 
   private PVector fishAvgPosition(){
@@ -217,10 +221,11 @@ class Game extends Scene{
   
   private void drawGage(){
     float rate = 1.0;
-    rate = min(max(log(fishDensity()), 0), 1);
+    rate = min(max(fishDensity(), 0), 1);
     fill(255, 32, 64);
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
+    println(fishDensity());
   }
   
   private void drawEggLife(){
