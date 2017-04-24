@@ -80,6 +80,7 @@ class Player implements Entity, Fish{
 
   void callCollidingEvent(EntityType type){
     if(type == EntityType.Crown){
+      resources.trigger("SE-5.mp3");
       charisma+=5000;
     }
   }
