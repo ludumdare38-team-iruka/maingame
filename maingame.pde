@@ -43,9 +43,8 @@ class Game extends Scene{
     }
 
     if(_mousePressing && _player.charisma > 0){
-      if(charismaFlag == true){
-        resources.trigger("SE-6.mp3");
-        charismaFlag = false;
+      if(seCount == 0){
+        resources.play("SE-6.mp3");
       }
       _player.charisma-=1.0f;
       float attraction = 4.0;
@@ -57,7 +56,13 @@ class Game extends Scene{
         fish.attraction(0.0);
       }
     }
-
+    if(seCount > 0 || (_mousePressing && _player.charisma > 0)){
+      seCount++;
+    }
+    if(seCount > 60){
+      seCount = 0;
+      resources.close("SE-6.mp3");
+    }
     _boidsManager.update(_player.position(), _fishes);
 
     for(Entity entity : _entities){
@@ -85,7 +90,6 @@ class Game extends Scene{
   }
 
   void mousePressed(){
-    charismaFlag = true;
     _mousePressing = true;
   }
 
@@ -114,7 +118,7 @@ class Game extends Scene{
   //System frags
   private boolean _isGameClear = false;
   private boolean _mousePressing = false;
-  private boolean charismaFlag = false;
+  private int seCount = 0;;
 
   //Eggs
   private int _initialEggs = 0;
