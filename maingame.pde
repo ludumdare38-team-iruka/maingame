@@ -102,11 +102,13 @@ class Game extends Scene{
     if(key == ' '){
       isPause = !isPause;
       if(isPause){
+        resources.pause("play.mp3");
         //ポーズ時の音が完成したら書換える
         //resources.play("");
       }else{
         //ポーズ解除時の音が完成したら書換える
         //resources.play("");
+        resources.play("play.mp3");
       }
     }
   }
