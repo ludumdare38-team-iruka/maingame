@@ -7,7 +7,20 @@ class Maguro implements Entity, Enemy{
 
   
   void update(){
-    
+    if(_status == MaguroStatus.Move){
+      moving();
+    }else{
+
+    }
+
+    _life -= _fishDensity;
+    _fishDensity = 0;
+    if(_life < 0){
+      _shouldDie = true;
+    }
+  }
+
+  void moving(){
     float speed = 1.5;
     float angle; 
     float ex,ey;
@@ -28,15 +41,10 @@ class Maguro implements Entity, Enemy{
     }else if(_position.y < _target.y){
       _direction.y = ey;
     }
-    _life -= _fishDensity;
-    _fishDensity = 0;
-    if(_life < 0){
-      _shouldDie = true;
-    }
+    _status = MaguroStatus.Move;
   }
   
   void draw(){
-    
     float angle;
     
     angle = atan2(_direction.y, _direction.x);
@@ -70,7 +78,11 @@ class Maguro implements Entity, Enemy{
 
   
   EntityType type(){return EntityType.Enemy;}
-  void callCollidingEvent(EntityType type){}
+  void callCollidingEvent(EntityType type){
+    if(type == EntityType.Egg){
+      _status = MaguroStatus.Stop;
+    };
+  }
 
   private PVector _position = new PVector();
   private PVector _direction = new PVector();
@@ -78,4 +90,10 @@ class Maguro implements Entity, Enemy{
   private float _life = 1000;
   private float _fishDensity = 0;
   private boolean _shouldDie = false;
+  private MaguroStatus _status = MaguroStatus.Move;
+}
+
+enum MaguroStatus{
+  Move,
+  Stop
 }
