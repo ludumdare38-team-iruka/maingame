@@ -3,7 +3,8 @@ enum GameState{
   Tutorial,
   Gaming,
   GameOver,
-  GameClear
+  GameClear,
+  Credit
 }
 
 import java.util.ListIterator;

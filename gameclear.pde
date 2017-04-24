@@ -6,6 +6,7 @@ class Gameclear extends Scene{
   void draw(){
     resources.draw("gameclear.png",0,0);
   }
+  Scene nextScene(){return(new Credit());}
   void mousePressed(){
     resources.close("clear.mp3");
     _isFinish = true;
