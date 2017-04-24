@@ -87,7 +87,7 @@ class Minion implements Entity, Fish{
   void calcVelocity(){
     float c1 = 0.5 + 2.0*_attraction*0.25;
     float c2 = 4.5;
-    float c3 = 1.0;
+    float c3 = 4.0;
     _r1 = 100;
     _r2 = 50;
     _r3 = 200;
@@ -202,10 +202,10 @@ class Minion implements Entity, Fish{
   };
 
   private PVector seek(PVector target) {
-    PVector desired = PVector.sub(target, _position);  // A vector pointing from the position to the target
+    PVector desired = PVector.sub(_target, _position);  // A vector pointing from the position to the target
     // if(desired.mag() > 200){
-    if(_attraction>0 && desired.mag() < _r4){
-      desired = PVector.sub(_target, _position);  // A vector pointing from the position to the target
+    if(_attraction == 0 || desired.mag() > _r4){
+      desired = PVector.sub(target, _position);  // A vector pointing from the position to the target
     }
     // Scale to maximum speed
     desired.normalize();

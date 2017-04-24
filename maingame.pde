@@ -26,10 +26,9 @@ class Game extends Scene{
     spawnEggs();
   }
 
+
   void update(){
-    if(int(_counter+1)%1000 == 0){
-      spawnMaguro();
-    }
+    spawnEnemies();
     
     if(int(_counter)%2000 == 0){
       spawnCrown();
@@ -116,10 +115,30 @@ class Game extends Scene{
   private int _eggs        = 0;
   private int _eatenEggs   = 0;
 
+  private void spawnEnemies(){
+    if(_counter < 2*60*30){
+      if(int(_counter+1)%600== 0){
+        spawnJellyFish();
+      }
+    }
+
+    if( 2*60*30 < _counter && _counter < 5*60*30){
+      if(int(_counter+1)%1000 == 0){
+        spawnMaguro();
+      }
+    }
+  }
+
   private void spawnMaguro(){
     Maguro maguro = new Maguro(random(0, screenSize.x), 0, 640+random(-50, 50), 650);
     _entities.add(maguro);
     _enemies.add(maguro);
+  }
+
+  private void spawnJellyFish(){
+    JellyFish jellyFish = new JellyFish(random(0, screenSize.x), 0, 640+random(-50, 50), 650);
+    _entities.add(jellyFish);
+    _enemies.add(jellyFish);
   }
 
   private void spawnCrown(){

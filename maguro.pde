@@ -15,8 +15,6 @@ class Maguro implements Entity, Enemy{
       _status = MaguroStatus.Move;
     }
 
-    _life -= _fishDensity;
-    _fishDensity = 0;
     if(_life < 0 && _status != MaguroStatus.Escape){
       _status = MaguroStatus.Escape;
       speed = 4.0;
