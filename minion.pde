@@ -96,11 +96,11 @@ class Minion implements Entity, Fish{
 
   void calcVelocity(){
     float c1 = 0.5 + 2.0*_attraction*0.25;
-    float c2 = 0.2;
+    float c2 = 0.1;
     float c3 = 4.0;
     _r1 = 100;
     _r2 = 50;
-    _r3 = 200;
+    _r3 = 300;
     _r4 = 200;
     PVector a1 = PVector.mult(calcCenter() ,c1);
     PVector a2 = PVector.mult(calcAvoid()  ,c2);

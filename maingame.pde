@@ -33,7 +33,7 @@ class Game extends Scene{
     }
     spawnEnemies();
     
-    if(int(_counter)%2000 == 0){
+    if(int(_counter)%1800 == 0){
       spawnCrown();
     }
 
@@ -95,7 +95,7 @@ class Game extends Scene{
       pushStyle();
       stroke(255, 220, 0);
       noFill();
-      int n = 4;
+      int n = int(ceil( _player.charisma/5000.0*5.0) );
       for(int i = 0; i<n;i++){
         float r = ((_counter+i*2)%15) / 15 * 200.0;
         ellipse(_player.position().x, _player.position().y, r, r);
@@ -318,7 +318,7 @@ boolean isPause = false;
 
 void setup(){
   frameRate(30);
-  strokeWeight(3);
+  strokeWeight(2);
   screenSize = new PVector(1280, 720);
   //720p
   size(1280, 720);
