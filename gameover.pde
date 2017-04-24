@@ -6,6 +6,7 @@ class Gameover extends Scene{
   void draw(){
     resources.draw("gameover.png", 0, 0);
   }
+  Scene nextScene(){return(new Opening());}
   void mousePressed(){
     _isFinish = true;
   }
