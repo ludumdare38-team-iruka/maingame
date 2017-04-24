@@ -98,7 +98,7 @@ class Game extends Scene{
       noFill();
       int n = int(ceil( _player.charisma/5000.0*5.0) );
       for(int i = 0; i<n;i++){
-        float r = ((_counter+i*2)%15) / 15 * 200.0;
+        float r = ((_counter*0.5+i*2)%15) / 15 * 200.0;
         ellipse(_player.position().x, _player.position().y, r, r);
       }
       popStyle();
