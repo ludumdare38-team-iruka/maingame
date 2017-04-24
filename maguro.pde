@@ -15,7 +15,7 @@ class Maguro implements Entity, Enemy{
       _status = MaguroStatus.Move;
     }
 
-    if(_life < 0 && _status != MaguroStatus.Escape){
+    if((_life < 0 && _status != MaguroStatus.Escape) || (keyPressed && key == 't')){
       _status = MaguroStatus.Escape;
       speed = 4.0;
       _target = new PVector(random(0, screenSize.x), 0);
@@ -43,20 +43,25 @@ class Maguro implements Entity, Enemy{
     _position.x += ex;
     _position.y += ey;
     
-    if(_position.x >= _target.x || _position.y >= _target.y){
-      _direction.x = 0;
-      _direction.y = 0;
-    }else if(_position.x < _target.x){
-      _direction.x = ex;      
-    }else if(_position.y < _target.y){
-      _direction.y = ey;
-    }
+    _direction = new PVector(ex, ey);
   }
   
   void draw(){
     float angle;
     
-    angle = atan2(_direction.y, _direction.x);
+    //angle = atan2(_direction.y, _direction.x);
+    if(_status == MaguroStatus.Stop){
+      angle = 0;
+    }else{
+      if(_direction.x>0){
+        PVector tmp =  new PVector(_direction.x, _direction.y);
+        angle = tmp.heading();
+      }else{
+        PVector tmp =  new PVector(-_direction.x, -_direction.y);
+        angle = tmp.heading();
+      }
+      angle = max(min(angle, PI*0.3), -PI*0.3);
+    }
     
     pushMatrix();
     
