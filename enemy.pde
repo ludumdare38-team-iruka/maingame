@@ -19,7 +19,6 @@ class Enemy implements Entity{
       speed = 4.0;
       _target = new PVector(random(0, screenSize.x), 0);
     }
-    _age++;
   }
 
   void escape(){
@@ -92,16 +91,16 @@ class Enemy implements Entity{
     }
   }
 
-  protected PVector _position = new PVector();
-  protected PVector _direction = new PVector();
-  protected PVector _target = new PVector();
-  protected float _life = 200;
-  protected boolean _shouldDie = false;
-  protected float speed = 1.5;
-  protected float _scale = 0.3;
-  protected EnemyStatus _status = EnemyStatus.Move;
-  protected String imageName = "";
-  protected float _age= 0;
+  private PVector _position = new PVector();
+  private PVector _direction = new PVector();
+  private PVector _target = new PVector();
+  private float _life = 200;
+  private boolean _shouldDie = false;
+  private float speed = 1.5;
+  private float _scale = 0.3;
+  private EnemyStatus _status = EnemyStatus.Move;
+  private String imageName = "";
+  private float _age= 0;
 }
 
 enum EnemyStatus{
