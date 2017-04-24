@@ -43,6 +43,7 @@ class Game extends Scene{
       _player.charisma-=1.0f;
       float attraction = 4.0;
       for(Fish fish: _fishes){
+        drawAura();
         fish.attraction(attraction);
       }
     }else{
@@ -103,6 +104,8 @@ class Game extends Scene{
   private List<Enemy> _enemies = new ArrayList<Enemy>();
 
   private Player _player;
+  
+  private int _aura = 100;
 
   private float _counter = 0;
 
@@ -125,6 +128,12 @@ class Game extends Scene{
   private void spawnCrown(){
     Crown crown = new Crown();
     _entities.add(crown);
+  }
+
+  private void drawAura(){
+    pushMatrix();
+    ellipse(mouseX, mouseY, _aura, _aura);
+    popMatrix();
   }
 
   private void updateEnemies(float fishDensity){
