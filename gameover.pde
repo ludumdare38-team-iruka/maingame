@@ -9,8 +9,8 @@ class Gameover extends Scene{
     pushMatrix();
     translate(520, height/2);
     scale(0.6);
-    resources.draw("egg.png");
     drawScore();
+    resources.draw("minion.png");
     popMatrix();
 
   }
@@ -23,6 +23,7 @@ class Gameover extends Scene{
   private int _score;
 
   private void drawScore(){
+    pushMatrix();
     String str;
     String[] life;
     
@@ -39,6 +40,7 @@ class Gameover extends Scene{
       }
       resources.draw(life[i] + ".png");
     }
+    popMatrix();
   }
 
 }
