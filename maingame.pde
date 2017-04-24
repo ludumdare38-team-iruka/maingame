@@ -90,12 +90,26 @@ class Game extends Scene{
       popMatrix();
     }
     drawUserInterface();
+
+    if(_mousePressing && _player.charisma > 0){
+      pushStyle();
+      stroke(255, 220, 0);
+      noFill();
+      int n = 4;
+      for(int i = 0; i<n;i++){
+        float r = ((_counter+i*2)%15) / 15 * 200.0;
+        ellipse(_player.position().x, _player.position().y, r, r);
+      }
+      popStyle();
+    }
+
     if(isPause){
       pushMatrix();
       translate(screenSize.x/2, screenSize.y/2);
       resources.draw("pause.png");
       popMatrix();
     }
+    
   }
 
   void keyReleased(){
@@ -304,6 +318,7 @@ boolean isPause = false;
 
 void setup(){
   frameRate(30);
+  strokeWeight(3);
   screenSize = new PVector(1280, 720);
   //720p
   size(1280, 720);
