@@ -21,11 +21,8 @@ class Game extends Scene{
     _entities.add(minion);
     _fishes.add(minion);
     
-    for(int i = 0; i < 50; i++){
-      Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/50);
-      _entities.add(egg);
-      
-    }
+    _initialEggs = 50;
+    spawnEggs();
   }
 
   void update(){
@@ -52,14 +49,13 @@ class Game extends Scene{
     _boidsManager.update(_player.position(), _fishes);
 
     float fishDensity = fishDensity();
-    println(fishDensity);
     updateEnemies(fishDensity);
 
     for(Entity entity : _entities){
       entity.update();
     }
 
-    spawnEggs();
+    spawnFishes();
     updateEntities();
     checkFinished();
 
@@ -69,6 +65,7 @@ class Game extends Scene{
 
 
   void draw(){
+    println("eatenEggs", _eatenEggs);
     resources.draw("background.png", 0, 0);
     for(Entity entity : _entities){
       pushMatrix();
@@ -100,6 +97,9 @@ class Game extends Scene{
   private boolean isGameClear = false;
   private boolean _mousePressing = false;
   private float _counter = 0;
+  private int _initialEggs = 0;
+  private int _eggs = 0;
+  private int _eatenEggs = 0;
 
   private void spawnMaguro(){
     Maguro maguro = new Maguro(random(0, screenSize.x), 0, 640, 640);
@@ -124,11 +124,23 @@ class Game extends Scene{
     ListIterator<Entity> itr = _entities.listIterator();
     while(itr.hasNext()){
       Entity entity = itr.next();
-      if(entity.shouldDie())itr.remove();
+      if(entity.shouldDie()){ 
+        if(entity.type() == EntityType.Egg){
+          _eatenEggs++;
+        }
+        itr.remove();
+      }
+    }
+  }
+  private void spawnEggs(){
+    for(int i = 0; i < _initialEggs; i++){
+      Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/_initialEggs);
+      _entities.add(egg);
+      
     }
   }
 
-  private void spawnEggs(){
+  private void spawnFishes(){
     ListIterator<Entity> itr = _entities.listIterator();
     while(itr.hasNext()){
       Entity entity = itr.next();
@@ -143,13 +155,12 @@ class Game extends Scene{
   }
 
   private void checkFinished(){
-    int eatenEggs = 0; //TODO
-    int eggs = 0;
+    _eggs = 0;
     for(Entity entity : _entities){
-      if(entity.type() == EntityType.Egg)eggs++;
+      if(entity.type() == EntityType.Egg)_eggs++;
     }
 
-    if(eggs == 0){
+    if(_eggs == 0){
       resources.close("play.mp3");
       _isFinish = true;
       isGameClear = true;//TODO
