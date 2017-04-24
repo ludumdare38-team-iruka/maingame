@@ -5,6 +5,7 @@ class Tutorial extends Scene{
     return(new Game());
   }
   void mousePressed(){
+    resources.close("title.mp3");
     _isFinish = true;
   }
 }
