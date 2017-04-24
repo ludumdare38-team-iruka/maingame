@@ -84,25 +84,33 @@ class Game extends Scene{
   }
 
   Scene nextScene(){
-    if(isGameClear)return(new Gameclear());
+    if(_isGameClear)return(new Gameclear());
     return(new Gameover());
   }
 
   private CollisionDetector _collisionDetector;
   private BoidsManager _boidsManager;
+
+  //GameObjectLists
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Fish> _fishes     = new ArrayList<Fish>();
   private List<Enemy> _enemies = new ArrayList<Enemy>();
+
   private Player _player;
-  private boolean isGameClear = false;
-  private boolean _mousePressing = false;
+
   private float _counter = 0;
+
+  //System frags
+  private boolean _isGameClear = false;
+  private boolean _mousePressing = false;
+
+  //Eggs
   private int _initialEggs = 0;
-  private int _eggs = 0;
-  private int _eatenEggs = 0;
+  private int _eggs        = 0;
+  private int _eatenEggs   = 0;
 
   private void spawnMaguro(){
-    Maguro maguro = new Maguro(random(0, screenSize.x), 0, 640, 640);
+    Maguro maguro = new Maguro(random(0, screenSize.x), 0, 640+random(-50, 50), 650);
     _entities.add(maguro);
     _enemies.add(maguro);
   }
@@ -134,7 +142,7 @@ class Game extends Scene{
   }
   private void spawnEggs(){
     for(int i = 0; i < _initialEggs; i++){
-      Egg egg = new Egg(640+random(-50, 50),640 + random(0, 50), 5*60*30-i*5*60*30/_initialEggs);
+      Egg egg = new Egg(640+random(-50, 50),640 + abs(random(-50, 50)), 5*60*30-i*5*60*30/_initialEggs);
       _entities.add(egg);
       
     }
@@ -163,7 +171,7 @@ class Game extends Scene{
     if(_eggs == 0){
       resources.close("play.mp3");
       _isFinish = true;
-      isGameClear = true;//TODO
+      _isGameClear = _eatenEggs < _initialEggs/2;
     }
   }
 
