@@ -19,5 +19,6 @@ class Opening extends Scene{
   }
   void mousePressed(){
     _isFinish = true;
+    resources.trigger("SE-1.mp3");
   }
 }
