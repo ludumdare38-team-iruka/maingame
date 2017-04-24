@@ -56,6 +56,7 @@ class Player implements Entity, Fish{
     resources.draw("crown.png");
     popMatrix();
   }
+  float attack(){return _attack;}
 
   boolean shouldDie(){return false;}
   void die(){}

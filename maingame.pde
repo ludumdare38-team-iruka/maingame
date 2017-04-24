@@ -34,9 +34,12 @@ class Game extends Scene{
       spawnCrown();
     }
 
+    _attack = _player.attack()/_fishes.size();
     for(Enemy enemy: _enemies){
       float dist = _player.position().dist(enemy.position());
-      //TODO
+      if(dist < _player.width()){
+        enemy.life(enemy.life()-_attack);
+      }
     }
 
     if(_mousePressing && _player.charisma > 0){
@@ -56,9 +59,6 @@ class Game extends Scene{
     }
 
     _boidsManager.update(_player.position(), _fishes);
-
-    float fishDensity = fishDensity();
-    updateEnemies(fishDensity*2.0f);
 
     for(Entity entity : _entities){
       entity.update();
@@ -107,6 +107,7 @@ class Game extends Scene{
   private List<Enemy> _enemies = new ArrayList<Enemy>();
 
   private Player _player;
+  private float _attack= 0;
 
   private float _counter = 0;
 
@@ -149,12 +150,6 @@ class Game extends Scene{
   private void spawnCrown(){
     Crown crown = new Crown();
     _entities.add(crown);
-  }
-
-  private void updateEnemies(float fishDensity){
-    for(Enemy enemy: _enemies){
-      enemy.fishDensity(fishDensity);
-    }
   }
 
   private void updateEntitieEvents(){
@@ -206,30 +201,6 @@ class Game extends Scene{
     }
   }
 
-  private float fishDensity(){
-    PVector avgPosition = fishAvgPosition();
-    float sum = 0;
-    int count = 0;
-    for(Fish fish: _fishes){
-      // if(_player.equals(fish))continue;
-      PVector diff = PVector.sub(_player.position(), fish.position());
-      // PVector diff = PVector.sub(fishAvgPosition(), fish.position());
-      float norm = diff.mag();
-      sum += norm*norm;
-      count++;
-    }
-    float result = (sum/count);
-    return 1.0f/sqrt(result)*50;
-  }
-
-  private PVector fishAvgPosition(){
-    PVector sum = new PVector();
-    for(Fish fish: _fishes){
-      sum.add(fish.position());
-    }
-    return sum.div(float(_fishes.size()));
-  }
-
   private void drawUserInterface(){
     pushMatrix();
     translate(0, screenSize.y-100);
@@ -246,11 +217,11 @@ class Game extends Scene{
   
   private void drawGage(){
     float rate = 1.0;
-    rate = min(max(fishDensity(), 0), 1);
+    rate = min(max(_attack, 0), 1);
     fill(255, 32, 64);
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
-    println(fishDensity());
+    println("attack", _attack);
   }
   
   private void drawEggLife(){

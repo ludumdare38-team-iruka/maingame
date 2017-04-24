@@ -70,9 +70,10 @@ class Enemy implements Entity{
   }
 
   boolean shouldDie(){return _shouldDie;}
-  void die(){}
-  float life(){return 0;}
-  float age(){return 0;}
+  void die(){_shouldDie = true;}
+  float life(){return _life;}
+  void life(float l){_life = l;}
+  float age(){return _age;}
 
   int width(){return 50;}
   int height(){return 50;}
@@ -82,28 +83,11 @@ class Enemy implements Entity{
 
   PVector position(){return _position;}
   PVector direction(){return _direction;}
-  void fishDensity(float d){_fishDensity = d;}
 
   EntityType type(){return EntityType.Enemy;}
   void callCollidingEvent(Entity entity){
     if(entity.type() == EntityType.Egg){
       _status = EnemyStatus.Stop;
-    }
-
-    if(entity.type() == EntityType.Player){
-      _life -= _fishDensity;
-      _fishDensity = 0;
-    }
-  }
-
-  void callCollidingEvent(EntityType type){
-    if(type == EntityType.Egg){
-      _status = EnemyStatus.Stop;
-    }
-
-    if(type == EntityType.Player){
-      _life -= _fishDensity;
-      _fishDensity = 0;
     }
   }
 
@@ -111,12 +95,12 @@ class Enemy implements Entity{
   private PVector _direction = new PVector();
   private PVector _target = new PVector();
   private float _life = 200;
-  private float _fishDensity = 0;
   private boolean _shouldDie = false;
   private float speed = 1.5;
   private float _scale = 0.3;
   private EnemyStatus _status = EnemyStatus.Move;
   private String imageName = "";
+  private float _age= 0;
 }
 
 enum EnemyStatus{
