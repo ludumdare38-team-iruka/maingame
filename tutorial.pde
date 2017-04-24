@@ -1,6 +1,8 @@
 class Tutorial extends Scene{
   void update(){}
-  void draw(){}
+  void draw(){
+    resources.draw("tutorial.png", 0, 0);
+  }
   Scene nextScene(){
     return(new Game());
   }
