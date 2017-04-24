@@ -117,6 +117,7 @@ class Game extends Scene{
     if(key == ' '){
       isPause = !isPause;
       if(isPause){
+        resources.trigger("SE-8.mp3");
         resources.pause("play.mp3");
         //ポーズ時の音が完成したら書換える
         //resources.play("");
@@ -124,6 +125,7 @@ class Game extends Scene{
         //ポーズ解除時の音が完成したら書換える
         //resources.play("");
         resources.loop("play.mp3");
+        resources.trigger("SE-9.mp3");
       }
     }
   }
