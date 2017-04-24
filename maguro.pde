@@ -15,7 +15,7 @@ class Maguro implements Entity, Enemy{
       _status = MaguroStatus.Move;
     }
 
-    if((_life < 0 && _status != MaguroStatus.Escape) || (keyPressed && key == 't')){
+    if(_life < 0 && _status != MaguroStatus.Escape){
       _status = MaguroStatus.Escape;
       speed = 4.0;
       _target = new PVector(random(0, screenSize.x), 0);

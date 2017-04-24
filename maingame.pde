@@ -28,9 +28,7 @@ class Game extends Scene{
 
 
   void update(){
-    if(keyPressed && key == 's'){
-      spawnMaguro();
-    }
+    spawnEnemies();
     
     if(int(_counter)%2000 == 0){
       spawnCrown();
@@ -247,7 +245,7 @@ class Game extends Scene{
     fill(255, 32, 64);
     rect(60, 26, rate*315f, 40);
     resources.draw("gage.png", 0, 0);
-    //println(fishDensity());
+    println(fishDensity());
   }
   
   private void drawEggLife(){
