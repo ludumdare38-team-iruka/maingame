@@ -40,8 +40,8 @@ class Egg implements Entity{
   PVector position(){return _position;};
   
   EntityType type(){return EntityType.Egg;}
-  void callCollidingEvent(EntityType type){
-    if(type == EntityType.Enemy){_life--;}
+  void callCollidingEvent(Entity entity){
+    if(entity.type() == EntityType.Enemy){_life--;}
   }
 
   private PVector _position = new PVector();
