@@ -34,6 +34,11 @@ class Game extends Scene{
       spawnCrown();
     }
 
+    for(Enemy enemy: _enemies){
+      float dist = _player.position().dist(enemy.position());
+      //TODO
+    }
+
     if(_mousePressing && _player.charisma > 0){
       if(charismaFlag == true){
         resources.trigger("SE-6.mp3");
@@ -60,7 +65,7 @@ class Game extends Scene{
     }
 
     spawnFishes();
-    updateEntities();
+    updateEntitieEvents();
     checkFinished();
 
     _counter++;
@@ -152,7 +157,7 @@ class Game extends Scene{
     }
   }
 
-  private void updateEntities(){
+  private void updateEntitieEvents(){
     _collisionDetector.update(_entities);
 
     ListIterator<Entity> itr = _entities.listIterator();
