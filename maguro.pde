@@ -9,20 +9,30 @@ class Maguro implements Entity, Enemy{
   void update(){
     if(_status == MaguroStatus.Move){
       moving();
+    }else if(_status == MaguroStatus.Escape){
+      escape();
     }else{
-
+      _status = MaguroStatus.Move;
     }
-    _status = MaguroStatus.Move;
-
+    
     _life -= _fishDensity;
     _fishDensity = 0;
-    if(_life < 0){
+    if(_life < 0 && _status != MaguroStatus.Escape){
+      _status = MaguroStatus.Escape;
+      speed = 4.0;
+      _target = new PVector(random(0, screenSize.x), 0);
+    }
+  }
+  void escape(){
+    moving();
+    float x = _position.x;
+    float y = _position.y;
+    if( x < 0 || x > screenSize.x || y < 0){
       _shouldDie = true;
     }
   }
 
   void moving(){
-    float speed = 1.5;
     float angle; 
     float ex,ey;
     
@@ -90,10 +100,12 @@ class Maguro implements Entity, Enemy{
   private float _life = 200;
   private float _fishDensity = 0;
   private boolean _shouldDie = false;
+  private float speed = 1.5;
   private MaguroStatus _status = MaguroStatus.Move;
 }
 
 enum MaguroStatus{
   Move,
+  Escape,
   Stop
 }
