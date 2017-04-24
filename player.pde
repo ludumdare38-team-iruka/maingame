@@ -15,7 +15,7 @@ class Player implements Entity, Fish{
     _position.add(diff);
     _direction = diff;
     if(charisma>0){
-      charisma-=1.0;
+      charisma-=2.0;
       charisma = max(charisma, 0);
     }
   }

@@ -2,7 +2,7 @@ class Minion implements Entity, Fish{
   Minion(float x, float y){
     _position     = new PVector(x, y);
     // _velocity     = new PVector(random(-5, 5), -2);
-    _velocity     = new PVector(5, -2);
+    _velocity     = new PVector(random(-3, 3), -2);
     _acceleration = new PVector(0, 0);
 
     _v1 = new PVector();
@@ -85,8 +85,8 @@ class Minion implements Entity, Fish{
   }
 
   void calcVelocity(){
-    float c1 = 0.5;
-    float c2 = 2.5;
+    float c1 = 0.5 + 2.0*_attraction*0.25;
+    float c2 = 4.5;
     float c3 = 1.0;
     _r1 = 100;
     _r2 = 50;
@@ -103,10 +103,10 @@ class Minion implements Entity, Fish{
     _acceleration = PVector.add(a1, a2, a3).div(2.0f);
 
     if(screenSize.y-10 < _position.y){
-      _acceleration.y -= 0.01;
+      _acceleration.y -= 0.1;
     }else if(_position.y < 10){
 
-      _acceleration.y += 0.01;
+      _acceleration.y += 0.1;
     }
   }
 
