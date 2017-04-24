@@ -14,7 +14,7 @@ class Maguro implements Entity, Enemy{
     }else{
       _status = MaguroStatus.Move;
     }
-    
+
     _life -= _fishDensity;
     _fishDensity = 0;
     if(_life < 0 && _status != MaguroStatus.Escape){
@@ -23,6 +23,7 @@ class Maguro implements Entity, Enemy{
       _target = new PVector(random(0, screenSize.x), 0);
     }
   }
+
   void escape(){
     moving();
     float x = _position.x;
@@ -92,6 +93,11 @@ class Maguro implements Entity, Enemy{
     if(type == EntityType.Egg){
       _status = MaguroStatus.Stop;
     };
+
+    if(type == EntityType.Player){
+      _life -= _fishDensity;
+      _fishDensity = 0;
+    }
   }
 
   private PVector _position = new PVector();
