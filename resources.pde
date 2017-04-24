@@ -60,7 +60,16 @@ class Resources{
       
     }
   }
-  
+  void pause(String name){
+    try{
+      if(!_sounds.containsKey(name)){
+        _sounds.put(name, minim.loadFile(name, 2048));
+      }
+      _sounds.get(name).pause();
+    }catch(Exception e){
+
+    }
+  }
   void close(String name){
     try{
       if(!_sounds.containsKey(name)){
