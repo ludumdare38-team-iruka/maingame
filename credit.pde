@@ -6,6 +6,7 @@ class Credit extends Scene{
   void draw(){
     resources.draw("credit.png",0,0);
   }
+  Scene nextScene(){return(new Opening());}
   void mousePressed(){
     _isFinish = true;
   }
