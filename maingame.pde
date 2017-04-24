@@ -28,6 +28,9 @@ class Game extends Scene{
 
 
   void update(){
+    if(isPause){
+      return;
+    }
     spawnEnemies();
     
     if(int(_counter)%2000 == 0){
@@ -87,8 +90,26 @@ class Game extends Scene{
       popMatrix();
     }
     drawUserInterface();
+    if(isPause){
+      pushMatrix();
+      translate(screenSize.x/2, screenSize.y/2);
+      resources.draw("pause.png");
+      popMatrix();
+    }
   }
 
+  void keyReleased(){
+    if(key == ' '){
+      isPause = !isPause;
+      if(isPause){
+        //ポーズ時の音が完成したら書換える
+        //resources.play("");
+      }else{
+        //ポーズ解除時の音が完成したら書換える
+        //resources.play("");
+      }
+    }
+  }
   void mousePressed(){
     _mousePressing = true;
   }
@@ -96,7 +117,6 @@ class Game extends Scene{
   void mouseReleased(){
     _mousePressing = false;
   }
-
   Scene nextScene(){
     if(_isGameClear)return(new Gameclear(_initialEggs - _eatenEggs));
     return(new Gameover(_initialEggs - _eatenEggs));
@@ -118,7 +138,8 @@ class Game extends Scene{
   //System frags
   private boolean _isGameClear = false;
   private boolean _mousePressing = false;
-  private int seCount = 0;;
+  private int seCount = 0;
+  private boolean isPause = false;
 
   //Eggs
   private int _initialEggs = 0;
@@ -211,8 +232,8 @@ class Game extends Scene{
     drawGage();
     popMatrix();
     
-    translate(1100,screenSize.y-60);
     pushMatrix();
+    translate(1100,screenSize.y-60);
     scale(0.3);
     resources.draw("egg.png");
     drawEggLife();
@@ -252,6 +273,7 @@ Resources resources = new Resources();
 Scene currentScene;
 
 PVector screenSize;
+boolean isPause = false;
 
 void setup(){
   frameRate(30);
