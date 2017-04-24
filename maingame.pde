@@ -207,8 +207,10 @@ class Game extends Scene{
     drawGage();
     popMatrix();
     
+    translate(1100,screenSize.y-60);
     pushMatrix();
-    translate(100,100);
+    scale(0.3);
+    resources.draw("egg.png");
     drawEggLife();
     popMatrix();
   }
@@ -225,13 +227,17 @@ class Game extends Scene{
     String str;
     String[] life;
     
-    str = String.value0f();
-    life = new String[str.length()];
+    str = nf(_eggs, 3);
+    life = str.split("");
     
     for(int i=0; i<str.length(); i++){
-      life[i] = String.value0f(str.charAt(i));
-   
-      scale(0.4);
+      if(i == 0){
+        translate(150, 0);
+      }else if(i == 1){
+        translate(100, 0);
+      }else if(i == 2){
+        translate(100, 0);
+      }
       resources.draw(life[i] + ".png");
     }
   }
