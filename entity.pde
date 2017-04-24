@@ -14,5 +14,5 @@ interface Entity{
   PVector position();
   
   EntityType type();
-  void callCollidingEvent(EntityType type);
+  void callCollidingEvent(Entity entity);
 }

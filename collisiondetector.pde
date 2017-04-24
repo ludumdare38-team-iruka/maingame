@@ -9,7 +9,7 @@ class CollisionDetector{
   private void updateEntities(List<Entity> entities){
     for(Entity from: entities){
       for(Entity to: _tree.detectedEntities(from)){
-        from.callCollidingEvent(to.type());
+        from.callCollidingEvent(to);
       }
     }
   }

@@ -39,8 +39,8 @@ class Crown implements Entity{
   PVector position(){return _position;};
   
   EntityType type(){return EntityType.Crown;}
-  void callCollidingEvent(EntityType type){
-    if(type == EntityType.Player){
+  void callCollidingEvent(Entity entity){
+    if(entity.type() == EntityType.Player){
       _shouldDie = true;
     }
   }

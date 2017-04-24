@@ -27,6 +27,8 @@ class Minion implements Entity, Fish{
 
     _position.y = min(_position.y, screenSize.y );
     _position.y = max(_position.y, 0 );
+
+    _acceleration.set(0, 0);
   }
   
   void draw(){
@@ -58,8 +60,8 @@ class Minion implements Entity, Fish{
   float life(){return 0;}
   float age(){return 0;}
 
-  int width(){return 0;}
-  int height(){return 0;}
+  int width(){return 20;}
+  int height(){return 20;}
 
   void attraction(float p){
     _attraction = p;
@@ -74,7 +76,15 @@ class Minion implements Entity, Fish{
   
   EntityType type(){return EntityType.Minion;}
 
-  void callCollidingEvent(EntityType type){}
+  void callCollidingEvent(Entity entity){
+    if(entity.type() == EntityType.Enemy){
+      float dist = PVector.dist(this._position, entity.position());
+      PVector direct = PVector.sub(entity.position(), _position);
+      PVector directNormal = new PVector();
+      directNormal.set(direct).normalize();
+      _acceleration.sub(PVector.div(directNormal, max( 20-dist, 0 )));
+    }
+  }
 
   void fishes(List<Fish> arr){
     _fishes = arr;
@@ -86,12 +96,12 @@ class Minion implements Entity, Fish{
 
   void calcVelocity(){
     float c1 = 0.5 + 2.0*_attraction*0.25;
-    float c2 = 4.5;
+    float c2 = 0.2;
     float c3 = 4.0;
     _r1 = 100;
     _r2 = 50;
     _r3 = 200;
-    _r4 = 100;
+    _r4 = 200;
     PVector a1 = PVector.mult(calcCenter() ,c1);
     PVector a2 = PVector.mult(calcAvoid()  ,c2);
     PVector a3 = PVector.mult(calcAverage(),c3);
@@ -132,6 +142,7 @@ class Minion implements Entity, Fish{
   private float _r3;
   private float _r4;
 
+
   private PVector calcCenter(){
     float neighbordist = _r1;
     PVector sum = new PVector(0, 0);
@@ -164,7 +175,7 @@ class Minion implements Entity, Fish{
         PVector direct = PVector.sub(fish.position(), this._position);
         PVector directNormal = new PVector();
         directNormal.set(direct).normalize();
-        v.sub(PVector.div(directNormal, dist));
+        v.sub(PVector.div(directNormal, max( _r2-dist, 0 )));
         count++;
       }
     }

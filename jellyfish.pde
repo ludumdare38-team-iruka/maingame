@@ -89,12 +89,12 @@ class JellyFish implements Entity, Enemy{
   
   EntityType type(){return EntityType.Enemy;}
 
-  void callCollidingEvent(EntityType type){
-    if(type == EntityType.Egg){
+  void callCollidingEvent(Entity entity){
+    if(entity.type() == EntityType.Egg){
       _status = JellyFishStatus.Stop;
     };
 
-    if(type == EntityType.Player){
+    if(entity.type() == EntityType.Player){
       _life -= _fishDensity;
       _fishDensity = 0;
     }
