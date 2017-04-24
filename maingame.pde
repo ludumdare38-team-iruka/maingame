@@ -222,6 +222,7 @@ Scene currentScene;
 PVector screenSize;
 
 void setup(){
+  frameRate(30);
   screenSize = new PVector(1280, 720);
   //720p
   size(1280, 720);
