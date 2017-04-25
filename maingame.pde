@@ -182,7 +182,7 @@ class Game extends Scene{
       }
     }
 
-    if( 3*60*30 < _counter && _counter < 4*60*30){
+    if( 2*60*30 < _counter && _counter < 3*60*30){
       if(int(_counter+1)%800 == 0){
         spawnOctopus();
       }
@@ -196,7 +196,7 @@ class Game extends Scene{
       }
     }
 
-    if( 4*60*30 < _counter && _counter < 5*60*30){
+    if( 3*60*30 < _counter && _counter < 5*60*30){
       if(int(_counter+1)%800 == 0){
         spawnOctopus();
       }
