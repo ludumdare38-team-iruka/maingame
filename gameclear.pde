@@ -7,11 +7,12 @@ class Gameclear extends Scene{
   void draw(){
     resources.draw("gameclear.png",0,0);
     pushMatrix();
-    translate(520, height/2);
+    translate(450, height/2);
     scale(0.6);
-    drawScore();
     resources.draw("minion.png");
     popMatrix();
+    
+    drawScore();
   }
   
   Scene nextScene(){return(new Credit());}
@@ -25,24 +26,22 @@ class Gameclear extends Scene{
   private int _score;
   
   private void drawScore(){
-    pushMatrix();
     String str;
     String[] life;
+    int x = 560;
     
     str = nf(score(), 3);
     life = str.split("");
     
     for(int i=0; i<str.length(); i++){
-      if(i == 0){
-        translate(150, 0);
-      }else if(i == 1){
-        translate(100, 0);
-      }else if(i == 2){
-        translate(100, 0);
-      }
+      pushMatrix();
+      translate(x, height/2);
+      scale(0.6);
       resources.draw(life[i] + ".png");
+      popMatrix();
+      
+      x += 60;
     }
-    popMatrix();
   }
 
 }
