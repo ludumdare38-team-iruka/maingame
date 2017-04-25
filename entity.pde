@@ -6,6 +6,8 @@ interface Entity{
   float life();
   float age();
 
+  float maxLife();
+
   int width();
   int height();
 

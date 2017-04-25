@@ -75,6 +75,7 @@ class Enemy implements Entity{
   void die(){_shouldDie = true;}
   float life(){return _life;}
   void life(float l){_life = l;}
+  float maxLife(){return _maxLife;}
   float age(){return _age;}
 
   int width(){return 50;}
@@ -109,6 +110,7 @@ class Enemy implements Entity{
   protected String imageName = "";
   protected float _age= 0;
   protected float _angle = 0;
+  protected float _maxLife = 200;
 }
 
 enum EnemyStatus{

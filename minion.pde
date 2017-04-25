@@ -58,6 +58,7 @@ class Minion implements Entity, Fish{
   boolean shouldDie(){return false;}
   void die(){}
   float life(){return 0;}
+  float maxLife(){return 0;}
   float age(){return 0;}
 
   int width(){return 20;}

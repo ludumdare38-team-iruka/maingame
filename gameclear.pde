@@ -11,8 +11,8 @@ class Gameclear extends Scene{
     scale(0.6);
     resources.draw("minion.png");
     popMatrix();
-    
     drawScore();
+    drawGameScore();
   }
   
   Scene nextScene(){return(new Credit());}

@@ -7,9 +7,31 @@ enum GameState{
   Credit
 }
 
+int GAMESCORE = 0;
+
+void drawGameScore(){
+  String str;
+  String[] score;
+  int x = int(screenSize.x) -230;
+ 
+  str = nf(GAMESCORE, 8);
+  score = str.split("");
+ 
+  for(int i=0; i<str.length(); i++){
+    pushMatrix();
+    translate(x, 40);
+    scale(0.3);
+    resources.draw(score[i] + ".png");
+    popMatrix();
+   
+    x += 30;
+  }
+}
+
 import java.util.ListIterator;
 class Game extends Scene{
   Game(){
+    GAMESCORE = 0;
     resources.loop("play.mp3");
     _collisionDetector = new CollisionDetector();
     _boidsManager = new BoidsManager();
@@ -111,6 +133,7 @@ class Game extends Scene{
       popMatrix();
     }
     
+    drawGameScore();
   }
 
   void keyReleased(){
@@ -187,7 +210,7 @@ class Game extends Scene{
         spawnOctopus();
       }
 
-      if(int(_counter+1)%600 == 0){
+      if(int(_counter+1)%800 == 0){
         spawnSeahorse();
       }
 
@@ -201,11 +224,11 @@ class Game extends Scene{
         spawnOctopus();
       }
 
-      if(int(_counter+1)%600 == 0){
+      if(int(_counter+1)%800 == 0){
         spawnSeahorse();
       }
 
-      if(int(_counter+1)%400 == 0){
+      if(int(_counter+1)%550 == 0){
         spawnMaguro();
       }
 
@@ -254,6 +277,10 @@ class Game extends Scene{
       if(entity.shouldDie()){ 
         if(entity.type() == EntityType.Egg){
           _eatenEggs++;
+        }
+
+        if(entity.type() == EntityType.Enemy){ 
+          GAMESCORE += entity.maxLife() * (_initialEggs-_eggs-_eatenEggs)*_attack;
         }
         itr.remove();
       }

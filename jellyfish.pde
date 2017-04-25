@@ -3,5 +3,6 @@ class JellyFish extends Enemy{
     super(x, y, tx, ty, "kurage.png");
     super._scale = 0.2;
     super._life = 50;
+    super._maxLife = 50;
   }
 }

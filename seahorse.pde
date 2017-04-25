@@ -3,5 +3,6 @@ class Seahorse extends Enemy{
     super(x, y, tx, ty, "seahorse.png");
     super._scale = 0.6;
     super._life = 150;
+    super._maxLife = 150;
   }
 }

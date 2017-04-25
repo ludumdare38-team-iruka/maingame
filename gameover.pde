@@ -14,6 +14,7 @@ class Gameover extends Scene{
     
     drawScore();
 
+    drawGameScore();
   }
   Scene nextScene(){return(new Opening());}
   void mousePressed(){

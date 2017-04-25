@@ -13,6 +13,8 @@ class Opening extends Scene{
     }
       
     popMatrix();
+
+    drawGameScore();
   }
   Scene nextScene(){
     return(new Tutorial());

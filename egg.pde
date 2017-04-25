@@ -28,6 +28,8 @@ class Egg implements Entity{
     return _age;
   }
 
+  float maxLife(){return 0;}
+
   int width(){return 10;}
   int height(){return 10;}
 
