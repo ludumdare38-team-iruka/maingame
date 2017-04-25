@@ -302,14 +302,14 @@ class Game extends Scene{
     
     pushMatrix();
     translate(1095, screenSize.y-80);
-    scale(0.3);
+    scale(0.32);
     resources.draw("minion.png");
     popMatrix();
     drawScore();
     
     pushMatrix();
     translate(1100,screenSize.y-40);
-    scale(0.27);
+    scale(0.22);
     resources.draw("egg.png");
     popMatrix();
     drawEggLife();
@@ -335,11 +335,11 @@ class Game extends Scene{
     for(int i=0; i<str.length(); i++){
       pushMatrix();
       translate(x, screenSize.y-80);
-      scale(0.3);
+      scale(0.32);
       resources.draw(life[i] + ".png");
       popMatrix();
       
-      x += 30;
+      x += 35;
     }
   }   
   
@@ -354,11 +354,11 @@ class Game extends Scene{
     for(int i=0; i<str.length(); i++){
       pushMatrix();
       translate(x, screenSize.y-40);
-      scale(0.3);
+      scale(0.22);
       resources.draw(life[i] + ".png");
       popMatrix();
       
-      x += 30;
+      x += 35;
     }
   }
 }
