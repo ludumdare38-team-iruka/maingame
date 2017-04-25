@@ -176,17 +176,41 @@ class Game extends Scene{
       if(int(_counter+1)%800 == 0){
         spawnOctopus();
       }
+
+      if(int(_counter+1)%1000== 0){
+        spawnJellyFish();
+      }
     }
 
     if( 3*60*30 < _counter && _counter < 4*60*30){
+      if(int(_counter+1)%800 == 0){
+        spawnOctopus();
+      }
+
       if(int(_counter+1)%600 == 0){
         spawnSeahorse();
+      }
+
+      if(int(_counter+1)%1000== 0){
+        spawnJellyFish();
       }
     }
 
     if( 4*60*30 < _counter && _counter < 5*60*30){
+      if(int(_counter+1)%800 == 0){
+        spawnOctopus();
+      }
+
+      if(int(_counter+1)%600 == 0){
+        spawnSeahorse();
+      }
+
       if(int(_counter+1)%400 == 0){
         spawnMaguro();
+      }
+
+      if(int(_counter+1)%1000== 0){
+        spawnJellyFish();
       }
     }
   }

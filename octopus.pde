@@ -6,13 +6,12 @@ class Octopus extends Enemy{
   }
 
   void draw(){
-    float angle;
-
-    angle = atan2(_direction.y, _direction.x);
+    _angle = _angle + atan2(_direction.y, _direction.x);
+    if(_status == EnemyStatus.Escape)_angle+=sin(_age*0.8)*0.2;
 
     pushMatrix();
 
-    rotate(angle);
+    rotate(_angle);
     if(_direction.x > 0){
       scale(-_scale, _scale);
     }else{
@@ -24,5 +23,7 @@ class Octopus extends Enemy{
       resources.draw("tako2.png");
     }
     popMatrix();
+
+    _angle = 0;;
   }
 }
