@@ -61,6 +61,8 @@ class Player implements Entity, Fish{
   boolean shouldDie(){return false;}
   void die(){}
   float life(){return 0;}
+  float maxLife(){return 0;}
+
   float age(){return 0;}
 
   int width(){return 150;}
@@ -83,7 +85,7 @@ class Player implements Entity, Fish{
   void callCollidingEvent(Entity entity){
     if(entity.type() == EntityType.Crown){
       resources.trigger("SE-5.mp3");
-      charisma+=5000;
+      charisma=min(charisma+5000, 10000);
     }
 
     if(entity.type() == EntityType.Minion){

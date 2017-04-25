@@ -3,6 +3,7 @@ class Octopus extends Enemy{
     super(x, y, tx, ty, "tako1.png");
     super._scale = 0.3;
     super._life = 100;
+    super._maxLife = 100;
   }
 
   void draw(){
