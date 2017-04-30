@@ -356,7 +356,7 @@ class Game extends Scene{
     String[] life;
     int x = 1150;
     
-    str = nf(_initialEggs - _eggs, 3);
+    str = nf(_initialEggs - _eggs - _eatenEggs, 3);
     life = str.split("");
     
     for(int i=0; i<str.length(); i++){
