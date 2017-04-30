@@ -60,6 +60,15 @@ class Resources{
       
     }
   }
+  void setGain(String name, float value){
+    try{
+      if(!_sounds.containsKey(name)){
+        _sounds.put(name, minim.loadFile(name, 2048));
+      }
+      _sounds.get(name).setGain(value);
+    }catch(Exception e){
+    }
+  }
   void pause(String name){
     try{
       if(!_sounds.containsKey(name)){
